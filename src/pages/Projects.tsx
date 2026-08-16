@@ -42,6 +42,8 @@ const Projects = () => {
           'Full-stack rental management platform built as a final year project. Handles tenant management, payment tracking, and reporting, with a relational database schema, authentication, and user role control.',
         category: 'Full Stack',
         tech: ['React', 'Node.js', 'Database', 'Authentication'],
+        github: 'https://github.com/jaHxii/kiray.git',
+        image: '/kiray_page.png',
         metrics: ['Final Year Project'],
       },
       {
