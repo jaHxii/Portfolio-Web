@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
+  Maximize,
+  Minimize,
   RotateCcw,
   ZoomIn,
   ZoomOut,
@@ -36,7 +38,23 @@ const DemoGallery = ({
   const [scale, setScale] = useState(MIN_SCALE);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      void document.exitFullscreen();
+    } else {
+      containerRef.current?.requestFullscreen().catch(() => {});
+    }
+  };
 
   useEffect(() => {
     if (open) {
@@ -112,11 +130,13 @@ const DemoGallery = ({
         <DialogHeader>
           <DialogTitle>{title} - Screenshots</DialogTitle>
           <DialogDescription>
-            {index + 1} of {images.length} · Scroll to zoom, drag to pan
+            {index + 1} of {images.length} · Scroll to zoom, drag to pan, or
+            view fullscreen
           </DialogDescription>
         </DialogHeader>
 
         <div
+          ref={containerRef}
           className='relative rounded-lg overflow-hidden bg-background border border-border select-none'
           style={{ touchAction: 'none' }}
           onWheel={onWheel}
@@ -167,6 +187,17 @@ const DemoGallery = ({
           )}
 
           <div className='absolute bottom-3 right-3 flex items-center gap-1'>
+            <button
+              onClick={toggleFullscreen}
+              aria-label={isFullscreen ? 'Exit fullscreen' : 'View fullscreen'}
+              className='p-2 glass rounded-full hover:shadow-glow transition-all'
+            >
+              {isFullscreen ? (
+                <Minimize className='h-4 w-4' />
+              ) : (
+                <Maximize className='h-4 w-4' />
+              )}
+            </button>
             <button
               onClick={zoomOut}
               aria-label='Zoom out'

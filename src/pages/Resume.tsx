@@ -250,7 +250,7 @@ const Resume = () => {
                     <p className='text-sm font-medium text-foreground print:text-black'>
                       {p.title}
                       {p.note && (
-                        <span className='font-normal text-muted-foreground print:text-gray-600'>
+                        <span className='font-mono text-[11px] tracking-wide text-muted-foreground print:text-gray-600'>
                           {' '}
                           ({p.note})
                         </span>
