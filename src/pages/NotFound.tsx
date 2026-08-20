@@ -1,18 +1,18 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Home, Terminal } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Home, Plane } from 'lucide-react';
 import SEO from '@/components/seo/SEO';
 import Navigation from '@/components/layout/Navigation';
+import Atmosphere from '@/components/atmosphere/Atmosphere';
 import PreloadLink from '@/components/ui/preload-link';
 
-const ASCII_404 = [
-  '  _  _  __   _  _    __    ___   __',
-  ' | || |/ /_ | || |  /_ /  / _ \\ / /_',
-  " | __ | '_ \\| || |_  | | | (_) | '_ \\",
-  ' |_||_|_||_||_||_( ) | |  \\___/|_.__/',
-  '                |/  |_/',
+const ALTITUDE_404 = [
+  '  ____    _   _   ____   _____  ',
+  ' |  _ \\  / \\ | |/ ___| |  ___| ',
+  ' | | | |/ _ \\| | |  _  | |_    ',
+  ' | |_| / ___ \\ | |_| | |  _|   ',
+  ' |____/_/   \\_|\\____|  |_|     ',
 ];
 
 const NotFound = () => {
@@ -34,20 +34,21 @@ const NotFound = () => {
   };
 
   return (
-    <div className='min-h-screen bg-background'>
+    <div className='min-h-screen bg-background relative overflow-hidden'>
+      <Atmosphere variant='mist' />
       <SEO {...seoProps} />
       <Navigation />
-      <div className='min-h-screen flex items-center justify-center px-4'>
+      <div className='relative z-10 min-h-screen flex items-center justify-center px-4'>
         <div className='text-center'>
-          {/* ASCII art easter egg */}
+          {/* Altitude art */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             className='mb-8'
           >
-            <pre className='font-mono text-primary/80 leading-tight text-xs sm:text-sm md:text-base overflow-x-auto'>
-              {ASCII_404.join('\n')}
+            <pre className='font-mono gold-text/80 leading-tight text-xs sm:text-sm md:text-base overflow-x-auto'>
+              {ALTITUDE_404.join('\n')}
             </pre>
           </motion.div>
 
@@ -57,18 +58,18 @@ const NotFound = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className='text-3xl md:text-4xl font-bold font-heading mb-4'
           >
-            Page not found
+            Lost above the clouds
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className='text-xl text-muted-foreground max-w-xl mx-auto mb-8'
+            className='text-xl text-mist-soft max-w-xl mx-auto mb-8 font-light'
           >
-            <Terminal className='inline h-5 w-5 text-primary mr-2' />
+            <Plane className='inline h-5 w-5 gold-text mr-2' />
             <span className='font-mono text-sm'>
-              error: route `{location.pathname}` not found
+              no route found at `{location.pathname}`
             </span>
           </motion.p>
 
@@ -78,10 +79,10 @@ const NotFound = () => {
             transition={{ delay: 0.6, duration: 0.5 }}
           >
             <PreloadLink to='/'>
-              <Button className='bg-primary hover:bg-primary/90 text-primary-foreground btn-glow hover-lift px-8 py-3'>
+              <span className='inline-flex items-center px-8 py-3.5 rounded-lg bg-mist text-storm-deep text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow-strong'>
                 <Home className='mr-2 h-4 w-4' />
                 Back to Home
-              </Button>
+              </span>
             </PreloadLink>
           </motion.div>
         </div>

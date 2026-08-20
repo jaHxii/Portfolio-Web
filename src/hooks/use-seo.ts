@@ -95,6 +95,20 @@ const pageSEOConfig: PageSEOConfig = {
     type: 'website',
     section: 'Contact',
   },
+  '/resume': {
+    title: 'Resume - Ermias Lemesa',
+    description:
+      'Resume of Ermias Lemesa — Computer Engineer and Senior IT Support Specialist. Education, skills, experience, and certifications.',
+    keywords: [
+      'resume',
+      'cv',
+      'curriculum vitae',
+      'computer engineer',
+      'it support',
+    ],
+    type: 'website',
+    section: 'Resume',
+  },
 };
 
 export const useSEO = (customSEO?: Partial<SEOProps>): SEOProps => {

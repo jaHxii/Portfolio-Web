@@ -1,20 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import {
-  Calendar,
-  MapPin,
-  Building,
-  Award,
-  Users,
-  TrendingUp,
-  Code,
-  Brain,
-  Server,
-} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Award, Building, MapPin, TrendingUp } from 'lucide-react';
 import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/Footer';
+import Atmosphere from '@/components/atmosphere/Atmosphere';
+import FlightLog from '@/components/ui/flight-log';
 import SEO from '@/components/seo/SEO';
 import StructuredData from '@/components/seo/StructuredData';
 import { useSEO } from '@/hooks/use-seo';
@@ -132,12 +123,6 @@ const Experience = () => {
     },
   ];
 
-  const getIcon = (index: number) => {
-    const icons = [Code, Brain, Server, Building];
-    const IconComponent = icons[index % icons.length];
-    return IconComponent;
-  };
-
   // Create organization schemas for work experience
   const organizationSchemas = experiences.map(exp =>
     createOrganizationSchema({
@@ -159,242 +144,227 @@ const Experience = () => {
   );
 
   return (
-    <>
+    <div className='min-h-screen bg-background'>
       <SEO {...seoProps} />
       <StructuredData schema={breadcrumbSchema} />
       {organizationSchemas.map((schema, index) => (
         <StructuredData key={index} schema={schema} />
       ))}
       <Navigation />
-      <div className='min-h-screen bg-background pt-20'>
-        <div className='container mx-auto px-4 py-12'>
+
+      {/* Hero */}
+      <section className='relative pt-36 pb-20 overflow-hidden'>
+        <Atmosphere />
+        <div className='relative z-10 container mx-auto px-4'>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className='max-w-3xl mx-auto text-center'
+          >
+            <FlightLog
+              entries={[
+                'FLIGHT PATH / CAREER',
+                'WAYPOINT 03 · CLIMBING',
+                'AUTOPILOT · ENGAGED',
+                'EST. ARRIVAL · CLOUD-9',
+              ]}
+            />
+            <h1 className='text-4xl md:text-5xl font-bold font-heading tracking-tight'>
+              <span className='name-gradient'>Experience</span>
+            </h1>
+            <p className='mt-5 text-lg text-mist-soft leading-relaxed font-light max-w-2xl mx-auto'>
+              A rising trajectory — from AI/ML intern to senior IT support,
+              climbing through hardware and systems.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Timeline */}
+      <section className='relative pb-16 overflow-hidden'>
+        <Atmosphere variant='mist' className='opacity-70' />
+        <div className='relative z-10 container mx-auto px-4 max-w-6xl'>
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className='max-w-6xl mx-auto'
+            className='relative'
           >
-            {/* Header */}
-            <div className='text-center mb-16'>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className='text-4xl md:text-5xl font-bold font-heading tracking-tight mb-4'
-              >
-                <span className='font-mono text-primary text-sm md:text-base mr-3'>
-                  03.
-                </span>
-                Professional <span className='gradient-text'>Experience</span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className='text-xl text-muted-foreground max-w-3xl mx-auto'
-              >
-                Hands-on experience in enterprise IT support, hardware
-                engineering, and AI/ML across ROTECH, Addis Mesob, and the
-                Ethiopian Artificial Intelligence Institute.
-              </motion.p>
-            </div>
+            {/* Flight path line */}
+            <div className='absolute left-5 md:left-1/3 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold/50 to-transparent' />
 
-            {/* Timeline */}
-            <div className='relative'>
-              {/* Timeline Line */}
-              <div className='absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-primary hidden md:block' />
-
-              {/* Experience Cards */}
-              <div className='space-y-12'>
-                {experiences.map((exp, index) => {
-                  const IconComponent = getIcon(index);
-                  return (
-                    <motion.div
-                      key={`${exp.company}-${exp.period}`}
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={inView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: 0.8 + index * 0.2, duration: 0.6 }}
-                      className='relative'
-                    >
-                      {/* Timeline Icon */}
-                      <div className='hidden md:flex absolute left-6 top-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-glow' />
-
-                      {/* Content Card */}
-                      <div className='md:ml-20'>
-                        <Card className='glass hover-lift transition-all duration-300'>
-                          <CardHeader>
-                            <div className='flex flex-col md:flex-row md:items-start md:justify-between gap-4'>
-                              <div className='space-y-2'>
-                                <CardTitle className='flex items-center gap-3'>
-                                  <IconComponent className='h-6 w-6 text-primary' />
-                                  <span className='text-xl'>{exp.role}</span>
-                                </CardTitle>
-                                <div className='flex items-center gap-4 text-muted-foreground'>
-                                  <div className='flex items-center gap-1'>
-                                    <Building className='h-4 w-4' />
-                                    <span>{exp.company}</span>
-                                  </div>
-                                  <div className='flex items-center gap-1'>
-                                    <MapPin className='h-4 w-4' />
-                                    <span>{exp.location}</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className='flex flex-col items-start md:items-end gap-2'>
-                                <div className='flex items-center gap-1 text-primary'>
-                                  <Calendar className='h-4 w-4' />
-                                  <span className='font-medium'>
-                                    {exp.period}
-                                  </span>
-                                </div>
-                                <Badge variant='outline' className='text-xs'>
-                                  {exp.type}
-                                </Badge>
-                              </div>
-                            </div>
-                          </CardHeader>
-                          <CardContent>
-                            <p className='text-muted-foreground mb-6'>
-                              {exp.description}
-                            </p>
-
-                            {/* Key Achievements */}
-                            <div className='mb-6'>
-                              <h4 className='font-semibold mb-3 flex items-center gap-2'>
-                                <Award className='h-4 w-4 text-primary' />
-                                Key Achievements
-                              </h4>
-                              <ul className='space-y-2'>
-                                {exp.achievements.map((achievement, i) => (
-                                  <li
-                                    key={i}
-                                    className='flex items-start gap-2 text-sm text-muted-foreground'
-                                  >
-                                    <div className='w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0' />
-                                    <span>{achievement}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-
-                            {/* Impact Metrics */}
-                            <div className='mb-6'>
-                              <h4 className='font-semibold mb-3 flex items-center gap-2'>
-                                <TrendingUp className='h-4 w-4 text-primary' />
-                                Impact Metrics
-                              </h4>
-                              <div className='flex flex-wrap gap-4'>
-                                {Object.entries(exp.impact).map(
-                                  ([key, value]) => (
-                                    <div
-                                      key={key}
-                                      className='bg-surface/50 px-3 py-2 rounded-lg border border-border/50'
-                                    >
-                                      <div className='text-primary font-semibold text-sm'>
-                                        {value}
-                                      </div>
-                                      <div className='text-xs text-muted-foreground capitalize'>
-                                        {key}
-                                      </div>
-                                    </div>
-                                  )
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Technologies */}
-                            <div>
-                              <h4 className='font-semibold mb-3'>
-                                Technologies Used
-                              </h4>
-                              <div className='flex flex-wrap gap-2'>
-                                {exp.technologies.map(tech => (
-                                  <Badge
-                                    key={tech}
-                                    variant='secondary'
-                                    className='text-xs hover:bg-primary/10 hover:border-primary/50 transition-colors'
-                                  >
-                                    {tech}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Education Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 1.6, duration: 0.8 }}
-              className='mt-20'
-            >
-              <h2 className='text-3xl font-bold text-center mb-12 font-heading tracking-tight'>
-                <span className='font-mono text-primary text-sm mr-3'>04.</span>
-                Education
-              </h2>
-              {education.map((edu, index) => (
-                <Card key={index} className='glass transition-all duration-300'>
-                  <CardHeader>
-                    <CardTitle className='flex items-center gap-3'>
-                      <Users className='h-6 w-6 text-primary' />
-                      <span>{edu.degree}</span>
-                    </CardTitle>
-                    <div className='flex flex-col md:flex-row md:justify-between gap-2 text-muted-foreground'>
-                      <span>{edu.school}</span>
-                      <div className='flex items-center gap-4'>
-                        <span>{edu.period}</span>
-                        <Badge
-                          variant='outline'
-                          className='text-primary border-primary/50'
-                        >
-                          GPA: {edu.gpa}
-                        </Badge>
-                      </div>
+            <div className='space-y-12 md:space-y-16'>
+              {experiences.map((exp, index) => (
+                <motion.div
+                  key={`${exp.company}-${exp.period}`}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: 0.3 + index * 0.18, duration: 0.6 }}
+                  className='relative md:grid md:grid-cols-12 md:gap-10 items-start'
+                >
+                  {/* Waypoint marker */}
+                  <div className='absolute left-5 md:left-1/3 -translate-x-1/2 top-8'>
+                    <div className='relative'>
+                      <div className='h-3 w-3 rounded-full bg-gold shadow-glow' />
+                      <div className='absolute inset-0 rounded-full bg-gold/40 animate-pulse' />
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className='space-y-4'>
-                      <div>
-                        <h4 className='font-semibold mb-2'>
-                          Final Year Project
-                        </h4>
-                        <p className='text-muted-foreground text-sm'>
-                          {edu.finalYearProject}
-                        </p>
+                  </div>
+
+                  {/* Meta column */}
+                  <div className='hidden md:flex flex-col items-end gap-1 pt-8 md:col-span-4'>
+                    <span className='font-mono text-xs tracking-[0.3em] gold-text'>
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className='font-heading font-semibold text-2xl tracking-tight'>
+                      {exp.period}
+                    </span>
+                  </div>
+
+                  {/* Card column */}
+                  <div className='pl-14 md:pl-0 pt-8 md:pt-0 md:col-span-8'>
+                    <div className='glass-cloud rounded-2xl p-7'>
+                      <div className='flex items-center gap-2 md:hidden mb-3'>
+                        <span className='font-mono text-xs tracking-[0.3em] gold-text'>
+                          {String(index + 1).padStart(2, '0')} / {exp.period}
+                        </span>
                       </div>
-                      <div>
-                        <h4 className='font-semibold mb-2'>
-                          Academic Achievements
+
+                      <h3 className='font-heading font-bold text-xl tracking-tight'>
+                        {exp.role}
+                      </h3>
+                      <div className='flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-mist-soft'>
+                        <div className='flex items-center gap-1.5'>
+                          <Building className='h-4 w-4 gold-text' />
+                          <span>{exp.company}</span>
+                        </div>
+                        <div className='flex items-center gap-1.5'>
+                          <MapPin className='h-4 w-4 gold-text' />
+                          <span>{exp.location}</span>
+                        </div>
+                      </div>
+
+                      <p className='text-mist-soft leading-relaxed mt-5 text-sm font-light'>
+                        {exp.description}
+                      </p>
+
+                      <div className='mt-6'>
+                        <h4 className='font-semibold text-sm mb-3 flex items-center gap-2'>
+                          <Award className='h-4 w-4 gold-text' />
+                          Key Achievements
                         </h4>
-                        <ul className='space-y-1'>
-                          {edu.achievements.map((achievement, i) => (
+                        <ul className='space-y-2'>
+                          {exp.achievements.map((achievement, i) => (
                             <li
                               key={i}
-                              className='flex items-start gap-2 text-sm text-muted-foreground'
+                              className='flex items-start gap-2.5 text-sm text-mist-soft'
                             >
-                              <div className='w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0' />
+                              <div className='w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0' />
                               <span>{achievement}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
+
+                      <div className='mt-6'>
+                        <h4 className='font-semibold text-sm mb-3 flex items-center gap-2'>
+                          <TrendingUp className='h-4 w-4 gold-text' />
+                          Impact
+                        </h4>
+                        <div className='flex flex-wrap gap-3'>
+                          {Object.entries(exp.impact).map(([key, value]) => (
+                            <div
+                              key={key}
+                              className='glass rounded-md px-3 py-2'
+                            >
+                              <div className='gold-text font-semibold text-sm'>
+                                {value}
+                              </div>
+                              <div className='text-xs text-mist-soft capitalize'>
+                                {key}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className='mt-6'>
+                        <h4 className='font-semibold text-sm mb-3'>
+                          Technologies Used
+                        </h4>
+                        <div className='flex flex-wrap gap-2'>
+                          {exp.technologies.map(tech => (
+                            <span
+                              key={tech}
+                              className='glass rounded-md px-2.5 py-1 font-mono text-xs text-mist-soft'
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </motion.div>
               ))}
-            </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Education */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className='mt-20'
+          >
+            <div className='text-center mb-10'>
+              <span className='font-mono text-xs tracking-[0.3em] gold-text'>
+                ORIGIN /
+              </span>
+              <h2 className='text-2xl md:text-3xl font-bold font-heading mt-2 tracking-tight'>
+                Education
+              </h2>
+            </div>
+            {education.map((edu, index) => (
+              <div
+                key={index}
+                className='glass-cloud rounded-2xl p-7 md:p-8 transition-all duration-300'
+              >
+                <div className='flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-4'>
+                  <div>
+                    <h3 className='font-heading font-bold text-lg tracking-tight'>
+                      {edu.degree}
+                    </h3>
+                    <p className='text-mist-soft text-sm mt-1'>{edu.school}</p>
+                  </div>
+                  <div className='flex items-center gap-3 md:flex-col md:items-end'>
+                    <span className='font-mono text-xs text-mist-soft'>
+                      {edu.period}
+                    </span>
+                    <span className='px-2.5 py-1 rounded-md border border-gold/40 text-gold font-mono text-xs'>
+                      GPA: {edu.gpa}
+                    </span>
+                  </div>
+                </div>
+                <ul className='space-y-2'>
+                  {edu.achievements.map((achievement, i) => (
+                    <li
+                      key={i}
+                      className='flex items-start gap-2.5 text-sm text-mist-soft'
+                    >
+                      <div className='w-1 h-1 bg-gold rounded-full mt-2 flex-shrink-0' />
+                      <span>{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </motion.div>
         </div>
-      </div>
-    </>
+      </section>
+      <Footer />
+    </div>
   );
 };
 

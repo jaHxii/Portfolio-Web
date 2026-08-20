@@ -1,13 +1,42 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Server, Code2, Globe, Wrench } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/Footer';
+import Atmosphere from '@/components/atmosphere/Atmosphere';
+import FlightLog from '@/components/ui/flight-log';
 import SEO from '@/components/seo/SEO';
 import StructuredData from '@/components/seo/StructuredData';
 import { useSEO } from '@/hooks/use-seo';
 import { useStructuredData } from '@/hooks/use-structured-data';
+import { cn } from '@/lib/utils';
+
+const ENGINEERING_STACK = [
+  {
+    code: 'SYS',
+    title: 'Systems',
+    skills: ['Windows', 'Linux', 'Hardware', 'Troubleshooting'],
+    level: 92,
+  },
+  {
+    code: 'NET',
+    title: 'Network',
+    skills: ['TCP/IP', 'Routing', 'Switching', 'Network troubleshooting'],
+    level: 85,
+  },
+  {
+    code: 'DEV',
+    title: 'Development',
+    skills: ['Python', 'React', 'JavaScript', 'SQL'],
+    level: 82,
+  },
+  {
+    code: 'ML',
+    title: 'AI / ML',
+    skills: ['PyTorch', 'TensorFlow', 'Computer Vision'],
+    level: 75,
+  },
+];
 
 const Skills = () => {
   const seoProps = useSEO();
@@ -18,172 +47,137 @@ const Skills = () => {
     threshold: 0.1,
   });
 
-  const skillCategories = [
-    {
-      icon: Server,
-      title: 'IT & Infrastructure',
-      color: 'text-blue-400',
-      skills: [
-        { name: 'IT Infrastructure Support', level: 92 },
-        { name: 'System Troubleshooting', level: 90 },
-        { name: 'Hardware Installation & Maintenance', level: 88 },
-        { name: 'Network Troubleshooting (VPN, Wi-Fi, Sharing)', level: 85 },
-        { name: 'Process Automation', level: 80 },
-        { name: 'Technical Documentation', level: 85 },
-      ],
-    },
-    {
-      icon: Code2,
-      title: 'Programming & Data',
-      color: 'text-green-400',
-      skills: [
-        { name: 'Python Programming', level: 85 },
-        { name: 'Database Design & SQL', level: 80 },
-        { name: 'Machine Learning Fundamentals', level: 75 },
-        { name: 'Data Preprocessing', level: 78 },
-        { name: 'REST APIs & WebSocket', level: 70 },
-      ],
-    },
-    {
-      icon: Globe,
-      title: 'Web Development',
-      color: 'text-purple-400',
-      skills: [
-        { name: 'Web Application Development', level: 80 },
-        { name: 'HTML / CSS / JavaScript', level: 82 },
-        { name: 'Progressive Web Apps', level: 75 },
-        { name: 'Responsive UI Design', level: 80 },
-      ],
-    },
-    {
-      icon: Wrench,
-      title: 'Tools & Practices',
-      color: 'text-orange-400',
-      skills: [
-        { name: 'Helpdesk & SLA Management', level: 88 },
-        { name: 'User Training & Support', level: 85 },
-        { name: 'Git / GitHub', level: 75 },
-        { name: 'Linux / Windows', level: 82 },
-        { name: 'IT Procurement & Vendor Coordination', level: 80 },
-      ],
-    },
-  ];
-
   return (
-    <>
+    <div className='min-h-screen bg-background'>
       <SEO {...seoProps} />
       <StructuredData schema={breadcrumbSchema} />
       <Navigation />
-      <div className='min-h-screen bg-background pt-20'>
-        <div className='container mx-auto px-4 py-12'>
+
+      {/* Hero */}
+      <section className='relative pt-36 pb-20 overflow-hidden'>
+        <Atmosphere variant='mist' />
+        <div className='relative z-10 container mx-auto px-4'>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className='max-w-3xl mx-auto text-center'
+          >
+            <FlightLog
+              entries={[
+                'FLIGHT LOG / ENGINEERING STACK',
+                'ENGINE ROOM · NOMINAL',
+                'INSTRUMENTS · ALL GREEN',
+                'MULTI-MODULE / CO-PILOTED',
+              ]}
+            />
+            <h1 className='text-4xl md:text-5xl font-bold font-heading tracking-tight'>
+              <span className='name-gradient'>Skills</span>
+            </h1>
+            <p className='mt-5 text-lg text-mist-soft leading-relaxed font-light max-w-2xl mx-auto'>
+              Practical, hands-on expertise across infrastructure, networking,
+              development, and AI/ML.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Engineering Stack */}
+      <section className='relative py-12 overflow-hidden'>
+        <Atmosphere />
+        <div className='relative z-10 container mx-auto px-4 max-w-5xl'>
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className='max-w-7xl mx-auto'
+            className='space-y-5'
           >
-            {/* Header */}
-            <div className='text-center mb-16'>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+            {ENGINEERING_STACK.map((group, gi) => (
+              <motion.div
+                key={group.code}
+                initial={{ opacity: 0, y: 24 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className='text-4xl md:text-5xl font-bold font-heading tracking-tight mb-4'
+                transition={{ delay: 0.3 + gi * 0.12, duration: 0.6 }}
+                className='glass-cloud rounded-xl p-7 md:p-8'
               >
-                <span className='font-mono text-primary text-sm md:text-base mr-3'>
-                  05.
-                </span>
-                Technical <span className='gradient-text'>Skills</span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className='text-xl text-muted-foreground max-w-3xl mx-auto'
-              >
-                Practical, hands-on expertise across IT infrastructure support,
-                hardware, networking, programming, and web development.
-              </motion.p>
-            </div>
+                <div className='flex items-center gap-4 mb-6'>
+                  <span className='font-mono text-xs tracking-[0.3em] gold-text'>
+                    {group.code}
+                  </span>
+                  <h2 className='font-heading font-semibold text-xl tracking-tight uppercase'>
+                    {group.title}
+                  </h2>
+                  <span className='font-mono text-xs text-mist-soft/60 ml-auto'>
+                    {group.level}%
+                  </span>
+                </div>
 
-            {/* Skills Grid */}
-            <div className='grid lg:grid-cols-2 gap-8 mb-16'>
-              {skillCategories.map((category, categoryIndex) => (
-                <motion.div
-                  key={category.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{
-                    delay: 0.8 + categoryIndex * 0.1,
-                    duration: 0.6,
-                  }}
-                  className='group'
+                <div className='grid sm:grid-cols-2 gap-x-8 gap-y-4'>
+                  {group.skills.map(skill => (
+                    <div key={skill} className='flex items-center gap-3'>
+                      <span className='h-1 w-1 rounded-full bg-gold shrink-0' />
+                      <span className='text-sm text-foreground/85'>
+                        {skill}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className='mt-6 h-px w-full bg-white/5'>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={inView ? { width: `${group.level}%` } : {}}
+                    transition={{
+                      delay: 0.6 + gi * 0.12,
+                      duration: 1,
+                      ease: 'easeOut',
+                    }}
+                    className='h-px bg-gradient-gold'
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Base-level proficiencies */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className={cn('mt-12 glass rounded-xl p-7')}
+          >
+            <div className='flex items-center gap-3 mb-5'>
+              <span className='font-mono text-xs tracking-[0.3em] gold-text'>
+                OPS
+              </span>
+              <h2 className='font-heading font-semibold text-lg tracking-tight uppercase'>
+                Operations & Practices
+              </h2>
+            </div>
+            <div className='flex flex-wrap gap-2'>
+              {[
+                'Helpdesk & SLA Management',
+                'IT Procurement',
+                'Technical Documentation',
+                'Process Automation',
+                'Git / GitHub',
+                'User Training',
+              ].map(skill => (
+                <span
+                  key={skill}
+                  className='glass inline-flex items-center gap-2 px-4 py-2 rounded-md font-mono text-xs text-mist-soft'
                 >
-                  <Card className='glass h-full transition-all duration-300 group-hover:shadow-glow'>
-                    <CardHeader className='pb-4'>
-                      <CardTitle className='flex items-center gap-3'>
-                        <div
-                          className={`p-2 bg-background rounded-lg group-hover:shadow-glow transition-all duration-300 ${category.color}`}
-                        >
-                          <category.icon className='h-6 w-6' />
-                        </div>
-                        <span className='group-hover:text-primary transition-colors'>
-                          {category.title}
-                        </span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className='space-y-4'>
-                        {category.skills.map((skill, skillIndex) => (
-                          <motion.div
-                            key={skill.name}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={inView ? { opacity: 1, x: 0 } : {}}
-                            transition={{
-                              delay:
-                                1.0 + categoryIndex * 0.1 + skillIndex * 0.05,
-                              duration: 0.4,
-                            }}
-                            className='space-y-2'
-                          >
-                            <div className='flex justify-between items-center'>
-                              <span className='text-sm font-medium'>
-                                {skill.name}
-                              </span>
-                              <span className='text-xs text-muted-foreground'>
-                                {skill.level}%
-                              </span>
-                            </div>
-                            <div className='w-full bg-surface rounded-full h-2'>
-                              <motion.div
-                                initial={{ width: 0 }}
-                                animate={
-                                  inView ? { width: `${skill.level}%` } : {}
-                                }
-                                transition={{
-                                  delay:
-                                    1.2 +
-                                    categoryIndex * 0.1 +
-                                    skillIndex * 0.05,
-                                  duration: 0.8,
-                                  ease: 'easeOut',
-                                }}
-                                className='bg-gradient-primary h-2 rounded-full shadow-glow'
-                              />
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                  <span className='h-1 w-1 rounded-full bg-gold/70' />
+                  {skill}
+                </span>
               ))}
             </div>
           </motion.div>
         </div>
-      </div>
-    </>
+      </section>
+      <Footer />
+    </div>
   );
 };
 

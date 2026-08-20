@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ConfirmCodeLink from '@/components/ui/confirm-code-link';
 import DemoGallery from '@/components/sections/DemoGallery';
 import { MESOB_DEMO_IMAGES } from '@/lib/mesob-demo-images';
 import {
@@ -35,15 +35,6 @@ const FEATURED: CarouselProject[] = [
     github: 'https://github.com/jaHxii/melala-buna-brand',
     demo: 'https://melalacoffee.netlify.app',
     image: '/melalaCoffee.webp',
-  },
-  {
-    title: 'Sador Bar & Restaurant — Digital Menu',
-    description:
-      'Bilingual Amharic/English digital menu for Sador Bar and Restaurant — food and drinks pages with categorized items, prices including VAT, and QR access for phones. Live on Netlify.',
-    category: 'Frontend',
-    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Netlify'],
-    demo: 'https://sador-menu.netlify.app/',
-    image: '/sador-menu.webp',
   },
   {
     title: 'KIRAY - Rental & Building Management',
@@ -128,12 +119,12 @@ const ProjectCarousel = () => {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -40 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <Card className='glass overflow-hidden'>
+          <div className='glass-cloud rounded-2xl overflow-hidden'>
             <div className='grid md:grid-cols-2'>
               {/* Image */}
-              <div className='relative overflow-hidden'>
+              <div className='relative overflow-hidden min-h-56'>
                 {project.image ? (
                   <img
                     src={project.image}
@@ -141,32 +132,39 @@ const ProjectCarousel = () => {
                     className='w-full h-56 md:h-full object-cover'
                   />
                 ) : (
-                  <div className='w-full h-56 md:h-full bg-gradient-to-br from-primary/40 via-secondary/40 to-background flex items-center justify-center'>
-                    <span className='text-6xl font-heading font-bold text-primary/60'>
+                  <div className='w-full h-56 md:h-full bg-gradient-to-br from-storm via-background to-background flex items-center justify-center'>
+                    <span className='text-6xl font-heading font-bold gold-text/70'>
                       {project.title.charAt(0)}
                     </span>
                   </div>
                 )}
-                <div className='absolute top-4 left-4'>
-                  <span className='px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full'>
+                <div className='absolute top-4 left-4 flex items-center gap-2'>
+                  <span className='px-3 py-1 rounded-md border border-gold/40 bg-background/70 backdrop-blur-sm text-xs font-mono text-gold'>
                     {project.category}
                   </span>
                 </div>
               </div>
 
               {/* Content */}
-              <div className='p-8 flex flex-col justify-center'>
-                <h3 className='text-2xl font-heading font-bold mb-3'>
+              <div className='p-8 md:p-10 flex flex-col justify-center text-left'>
+                <div className='flex items-center gap-3 mb-4'>
+                  <span className='font-mono text-xs tracking-[0.3em] gold-text'>
+                    {String(index + 1).padStart(2, '0')} /{' '}
+                    {String(FEATURED.length).padStart(2, '0')}
+                  </span>
+                  <span className='h-px flex-1 bg-border' />
+                </div>
+                <h3 className='text-2xl font-heading font-bold mb-3 tracking-tight'>
                   {project.title}
                 </h3>
-                <p className='text-muted-foreground leading-relaxed mb-6'>
+                <p className='text-mist-soft leading-relaxed mb-6 font-light'>
                   {project.description}
                 </p>
-                <div className='flex flex-wrap gap-2 mb-6'>
+                <div className='flex flex-wrap gap-2 mb-8'>
                   {project.tech.map(tech => (
                     <span
                       key={tech}
-                      className='px-2 py-1 bg-background border border-border text-xs rounded-md'
+                      className='glass rounded-md px-3 py-1.5 font-mono text-xs text-mist-soft'
                     >
                       {tech}
                     </span>
@@ -175,16 +173,11 @@ const ProjectCarousel = () => {
                 {(project.github || project.demo || project.demoImages) && (
                   <div className='flex gap-3'>
                     {project.github && (
-                      <Button variant='outline' size='sm' asChild>
-                        <a
-                          href={project.github}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                        >
-                          <Github className='h-4 w-4 mr-2' />
-                          Code
-                        </a>
-                      </Button>
+                      <ConfirmCodeLink
+                        href={project.github}
+                        projectName={project.title}
+                        className='glass text-mist-soft hover:border-gold/60'
+                      />
                     )}
                     {project.demoImages ? (
                       <Button size='sm' onClick={() => setDemoOpen(true)}>
@@ -209,16 +202,16 @@ const ProjectCarousel = () => {
                 )}
               </div>
             </div>
-          </Card>
+          </div>
         </motion.div>
       </AnimatePresence>
 
       {/* Controls */}
-      <div className='flex items-center justify-center gap-6 mt-6'>
+      <div className='flex items-center justify-center gap-6 mt-7'>
         <button
           onClick={() => go(-1)}
           aria-label='Previous project'
-          className='p-2 glass rounded-full hover:shadow-glow transition-all'
+          className='glass p-2.5 rounded-full text-mist-soft hover:text-gold hover:border-gold/50 transition-all duration-300'
         >
           <ChevronLeft className='h-4 w-4' />
         </button>
@@ -230,8 +223,8 @@ const ProjectCarousel = () => {
               aria-label={`Go to project ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === index
-                  ? 'w-6 bg-primary'
-                  : 'w-1.5 bg-border hover:bg-muted-foreground'
+                  ? 'w-6 bg-gradient-gold'
+                  : 'w-1.5 bg-storm hover:bg-mist-soft/60'
               }`}
             />
           ))}
@@ -239,7 +232,7 @@ const ProjectCarousel = () => {
         <button
           onClick={() => go(1)}
           aria-label='Next project'
-          className='p-2 glass rounded-full hover:shadow-glow transition-all'
+          className='glass p-2.5 rounded-full text-mist-soft hover:text-gold hover:border-gold/50 transition-all duration-300'
         >
           <ChevronRight className='h-4 w-4' />
         </button>

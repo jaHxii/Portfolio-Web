@@ -13,18 +13,21 @@ import {
   Check,
   Clock,
   Loader2,
+  Plane,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { useToast } from '@/components/ui/use-toast';
 import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/Footer';
+import Atmosphere from '@/components/atmosphere/Atmosphere';
+import FlightLog from '@/components/ui/flight-log';
 import SEO from '@/components/seo/SEO';
 import StructuredData from '@/components/seo/StructuredData';
 import { useSEO } from '@/hooks/use-seo';
 import { useStructuredData } from '@/hooks/use-structured-data';
+import { useToast } from '@/components/ui/use-toast';
 
 const Contact = () => {
   const seoProps = useSEO();
@@ -179,330 +182,373 @@ const Contact = () => {
   };
 
   return (
-    <>
+    <div className='min-h-screen bg-background'>
       <SEO {...seoProps} />
       <StructuredData schema={breadcrumbSchema} />
       <Navigation />
-      <div className='min-h-screen bg-background pt-20'>
-        <div className='container mx-auto px-4 py-12'>
+
+      {/* Hero — sunlit horizon */}
+      <section className='relative pt-36 pb-24 overflow-hidden'>
+        <Atmosphere variant='horizon' />
+        <div className='relative z-10 container mx-auto px-4'>
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className='max-w-7xl mx-auto'
+            className='max-w-3xl mx-auto text-center'
           >
-            {/* Header */}
-            <div className='text-center mb-16'>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className='text-4xl md:text-5xl font-bold font-heading tracking-tight mb-4'
-              >
-                <span className='font-mono text-primary text-sm md:text-base mr-3'>
-                  06.
-                </span>
-                Let's <span className='gradient-text'>Connect</span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className='text-xl text-muted-foreground max-w-3xl mx-auto'
-              >
-                Ready to bring your ideas to life? Let's discuss your next
-                project and how I can help you achieve your goals with
-                cutting-edge technology solutions.
-              </motion.p>
+            <FlightLog
+              entries={[
+                'HORIZON / CONTACT',
+                'CLEARED FOR LANDING',
+                'APPROACH · FINAL',
+                'ON THE GROUND · CHAT',
+              ]}
+            />
+            <h1 className='text-4xl md:text-6xl font-bold font-heading tracking-tight leading-tight'>
+              Let&apos;s Build Something{' '}
+              <span className='gold-text'>Reliable.</span>
+            </h1>
+            <p className='mt-6 text-lg text-mist-soft leading-relaxed font-light max-w-2xl mx-auto'>
+              Whether you need technical support, infrastructure work, software
+              development, or an engineering-minded problem solver — let&apos;s
+              talk.
+            </p>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={inView ? { width: 120 } : {}}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className='h-px bg-gradient-gold mx-auto rounded-full mt-8'
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className='relative pb-16 overflow-hidden'>
+        <div className='container mx-auto px-4 max-w-6xl'>
+          <div className='grid lg:grid-cols-3 gap-8'>
+            {/* Contact Information */}
+            <div className='lg:col-span-1 space-y-6'>
               <motion.div
-                initial={{ width: 0 }}
-                animate={inView ? { width: 100 } : {}}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className='h-1 bg-gradient-primary mx-auto rounded-full mt-8'
-              />
-            </div>
-
-            <div className='grid lg:grid-cols-3 gap-8'>
-              {/* Contact Information */}
-              <div className='lg:col-span-1 space-y-6'>
-                {/* Contact Methods */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                >
-                  <Card className='glass'>
-                    <CardHeader>
-                      <CardTitle>Contact Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className='space-y-4'>
-                      {contactMethods.map((method, index) => (
-                        <motion.div
-                          key={method.label}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={inView ? { opacity: 1, y: 0 } : {}}
-                          transition={{
-                            delay: 1.0 + index * 0.1,
-                            duration: 0.5,
-                          }}
-                          className='flex items-start gap-3 p-3 rounded-lg hover:bg-surface/50 transition-colors group'
-                        >
-                          <div className='p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors'>
-                            <method.icon className='h-4 w-4 text-primary' />
-                          </div>
-                          <div className='flex-1 min-w-0'>
-                            <div className='flex items-center gap-2'>
-                              <p className='font-medium text-sm'>
-                                {method.label}
-                              </p>
-                              {method.copyable && (
-                                <Button
-                                  size='sm'
-                                  variant='ghost'
-                                  className='h-6 w-6 p-0 hover:bg-primary/10'
-                                  onClick={() =>
-                                    copyToClipboard(method.value, method.label)
-                                  }
-                                >
-                                  {copied === method.label ? (
-                                    <Check className='h-3 w-3 text-green-500' />
-                                  ) : (
-                                    <Copy className='h-3 w-3' />
-                                  )}
-                                </Button>
-                              )}
-                            </div>
-                            <p className='text-sm text-muted-foreground mb-1'>
-                              {method.value}
-                            </p>
-                            <p className='text-xs text-muted-foreground'>
-                              {method.description}
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-
-                {/* Social Links */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 1.2, duration: 0.6 }}
-                >
-                  <Card className='glass'>
-                    <CardHeader>
-                      <CardTitle>Connect Online</CardTitle>
-                    </CardHeader>
-                    <CardContent className='space-y-3'>
-                      {socialLinks.map((social, index) => (
-                        <motion.a
-                          key={social.label}
-                          href={social.href}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={inView ? { opacity: 1, y: 0 } : {}}
-                          transition={{
-                            delay: 1.4 + index * 0.1,
-                            duration: 0.5,
-                          }}
-                          className='flex items-center gap-3 p-3 rounded-lg hover:bg-surface/50 transition-all duration-300 hover-lift group'
-                        >
-                          <div className='p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors'>
-                            <social.icon className='h-4 w-4 text-primary' />
-                          </div>
-                          <div>
-                            <p className='font-medium text-sm group-hover:text-primary transition-colors'>
-                              {social.label}
-                            </p>
-                            <p className='text-xs text-muted-foreground'>
-                              {social.description}
-                            </p>
-                          </div>
-                        </motion.a>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-
-                {/* Working Hours */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 1.6, duration: 0.6 }}
-                >
-                  <Card className='glass'>
-                    <CardHeader>
-                      <CardTitle className='flex items-center gap-2'>
-                        <Clock className='h-5 w-5 text-primary' />
-                        Working Hours
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className='space-y-2'>
-                      {workingHours.map((schedule, index) => (
-                        <div
-                          key={index}
-                          className='flex justify-between items-center text-sm'
-                        >
-                          <span className='text-muted-foreground'>
-                            {schedule.day}
-                          </span>
-                          <Badge variant='outline' className='text-xs'>
-                            {schedule.time}
-                          </Badge>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </div>
-
-              {/* Contact Form */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
+                initial={{ opacity: 0, x: -30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.8, duration: 0.6 }}
-                className='lg:col-span-2'
               >
-                <Card className='glass'>
+                <Card className='glass-cloud'>
                   <CardHeader>
-                    <CardTitle>Send me a message</CardTitle>
-                    <p className='text-muted-foreground'>
-                      Have a project in mind? Let's discuss how we can work
-                      together.
-                    </p>
+                    <CardTitle className='font-heading'>
+                      Contact Information
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <form
-                      ref={formRef}
-                      onSubmit={handleSubmit}
-                      className='space-y-6'
-                    >
-                      <div className='grid md:grid-cols-2 gap-4'>
-                        <div className='space-y-2'>
-                          <label htmlFor='name' className='text-sm font-medium'>
-                            Full Name *
-                          </label>
-                          <Input
-                            id='name'
-                            name='name'
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            placeholder='John Doe'
-                            required
-                            disabled={isSending}
-                            className='bg-surface border-border focus:border-primary'
-                          />
-                        </div>
-                        <div className='space-y-2'>
-                          <label
-                            htmlFor='email'
-                            className='text-sm font-medium'
-                          >
-                            Email Address *
-                          </label>
-                          <Input
-                            id='email'
-                            name='email'
-                            type='email'
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            placeholder='john@example.com'
-                            required
-                            disabled={isSending}
-                            className='bg-surface border-border focus:border-primary'
-                          />
-                        </div>
-                      </div>
-
-                      <div className='space-y-2'>
-                        <label
-                          htmlFor='subject'
-                          className='text-sm font-medium'
-                        >
-                          Subject *
-                        </label>
-                        <Input
-                          id='subject'
-                          name='subject'
-                          value={formData.subject}
-                          onChange={handleInputChange}
-                          placeholder='Project inquiry, collaboration, etc.'
-                          required
-                          disabled={isSending}
-                          className='bg-surface border-border focus:border-primary'
-                        />
-                      </div>
-
-                      <div className='space-y-2'>
-                        <label
-                          htmlFor='message'
-                          className='text-sm font-medium'
-                        >
-                          Message *
-                        </label>
-                        <Textarea
-                          id='message'
-                          name='message'
-                          value={formData.message}
-                          onChange={handleInputChange}
-                          placeholder='Tell me about your project, timeline, budget, and any specific requirements...'
-                          rows={6}
-                          required
-                          disabled={isSending}
-                          className='bg-surface border-border focus:border-primary resize-none'
-                        />
-                      </div>
-
-                      <Button
-                        type='submit'
-                        disabled={isSending}
-                        className='w-full bg-primary hover:bg-primary/90 text-primary-foreground btn-glow hover-lift disabled:opacity-70'
+                  <CardContent className='space-y-4'>
+                    {contactMethods.map((method, index) => (
+                      <motion.div
+                        key={method.label}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={inView ? { opacity: 1, y: 0 } : {}}
+                        transition={{
+                          delay: 1.0 + index * 0.08,
+                          duration: 0.5,
+                        }}
+                        className='flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors group'
                       >
-                        {isSending ? (
-                          <>
-                            <Loader2 className='mr-2 h-4 w-4 animate-spin' />{' '}
-                            Sending…
-                          </>
-                        ) : (
-                          <>
-                            <Send className='mr-2 h-4 w-4' /> Send Message
-                          </>
-                        )}
-                      </Button>
-                    </form>
+                        <div className='p-2 bg-gold/10 rounded-lg shrink-0'>
+                          <method.icon className='h-4 w-4 gold-text' />
+                        </div>
+                        <div className='flex-1 min-w-0'>
+                          <div className='flex items-center gap-2'>
+                            <p className='font-medium text-sm'>
+                              {method.label}
+                            </p>
+                            {method.copyable && (
+                              <Button
+                                size='sm'
+                                variant='ghost'
+                                className='h-6 w-6 p-0 hover:bg-gold/10'
+                                onClick={() =>
+                                  copyToClipboard(method.value, method.label)
+                                }
+                                aria-label={`Copy ${method.label}`}
+                              >
+                                {copied === method.label ? (
+                                  <Check className='h-3 w-3 text-gold' />
+                                ) : (
+                                  <Copy className='h-3 w-3' />
+                                )}
+                              </Button>
+                            )}
+                          </div>
+                          <p className='text-sm text-mist-soft mb-1'>
+                            {method.value}
+                          </p>
+                          <p className='text-xs text-mist-soft/70'>
+                            {method.description}
+                          </p>
+                        </div>
+                      </motion.div>
+                    ))}
                   </CardContent>
                 </Card>
               </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 1.1, duration: 0.6 }}
+              >
+                <Card className='glass-cloud'>
+                  <CardHeader>
+                    <CardTitle className='font-heading'>
+                      Connect Online
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className='space-y-3'>
+                    {socialLinks.map((social, index) => (
+                      <motion.a
+                        key={social.label}
+                        href={social.href}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={inView ? { opacity: 1, y: 0 } : {}}
+                        transition={{
+                          delay: 1.3 + index * 0.08,
+                          duration: 0.5,
+                        }}
+                        className='flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-all duration-300 group'
+                      >
+                        <div className='p-2 bg-gold/10 rounded-lg shrink-0'>
+                          <social.icon className='h-4 w-4 gold-text' />
+                        </div>
+                        <div>
+                          <p className='font-medium text-sm group-hover:text-gold transition-colors'>
+                            {social.label}
+                          </p>
+                          <p className='text-xs text-mist-soft'>
+                            {social.description}
+                          </p>
+                        </div>
+                      </motion.a>
+                    ))}
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 1.4, duration: 0.6 }}
+              >
+                <Card className='glass-cloud'>
+                  <CardHeader>
+                    <CardTitle className='font-heading flex items-center gap-2'>
+                      <Clock className='h-5 w-5 gold-text' />
+                      Working Hours
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className='space-y-2'>
+                    {workingHours.map((schedule, index) => (
+                      <div
+                        key={index}
+                        className='flex justify-between items-center text-sm'
+                      >
+                        <span className='text-mist-soft'>{schedule.day}</span>
+                        <span className='glass px-2.5 py-0.5 rounded-md text-xs text-mist-soft'>
+                          {schedule.time}
+                        </span>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 1.5, duration: 0.6 }}
+                aria-label='Boarding pass'
+              >
+                <div className='glass-cloud rounded-2xl overflow-hidden'>
+                  <div className='flex items-center justify-between px-5 py-3 border-b border-dashed border-border/60'>
+                    <span className='font-mono text-[10px] tracking-[0.25em] text-mist-soft'>
+                      BOARDING PASS
+                    </span>
+                    <Plane className='h-4 w-4 gold-text' aria-hidden='true' />
+                  </div>
+                  <div className='px-5 py-4 space-y-2.5'>
+                    <div className='flex justify-between'>
+                      <span className='font-mono text-[10px] tracking-[0.2em] text-mist-soft/70'>
+                        PASSENGER
+                      </span>
+                      <span className='text-sm font-medium'>ERMIAS LEMESA</span>
+                    </div>
+                    <div className='flex justify-between'>
+                      <span className='font-mono text-[10px] tracking-[0.2em] text-mist-soft/70'>
+                        FROM
+                      </span>
+                      <span className='text-sm'>ADDIS ABABA</span>
+                    </div>
+                    <div className='flex justify-between'>
+                      <span className='font-mono text-[10px] tracking-[0.2em] text-mist-soft/70'>
+                        TO
+                      </span>
+                      <span className='text-sm'>REMOTE · WORLDWIDE</span>
+                    </div>
+                    <div className='flex justify-between'>
+                      <span className='font-mono text-[10px] tracking-[0.2em] text-mist-soft/70'>
+                        CLASS
+                      </span>
+                      <span className='text-sm'>SENIOR IT</span>
+                    </div>
+                    <div className='flex justify-between items-center border-t border-dashed border-border/60 pt-2.5'>
+                      <span className='font-mono text-[10px] tracking-[0.2em] text-mist-soft/70'>
+                        SEAT
+                      </span>
+                      <span className='font-mono text-xs gold-text'>01A</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
 
-            {/* Response Time Notice */}
+            {/* Contact Form */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 1.8, duration: 0.6 }}
-              className='mt-12 text-center'
+              initial={{ opacity: 0, x: 30 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className='lg:col-span-2'
             >
-              <Card className='glass max-w-2xl mx-auto'>
-                <CardContent className='p-6'>
-                  <h3 className='font-semibold mb-2'>
-                    Quick Response Guarantee
-                  </h3>
-                  <p className='text-muted-foreground text-sm'>
-                    I typically respond to all inquiries within{' '}
-                    <span className='text-primary font-medium'>24 hours</span>.
-                    For urgent matters, please use Telegram or call directly.
+              <Card className='glass-cloud'>
+                <CardHeader>
+                  <CardTitle className='font-heading'>
+                    Send me a message
+                  </CardTitle>
+                  <p className='text-mist-soft'>
+                    Have a project in mind? Let&apos;s discuss how we can work
+                    together.
                   </p>
+                </CardHeader>
+                <CardContent>
+                  <form
+                    ref={formRef}
+                    onSubmit={handleSubmit}
+                    className='space-y-6'
+                  >
+                    <div className='grid md:grid-cols-2 gap-4'>
+                      <div className='space-y-2'>
+                        <label htmlFor='name' className='text-sm font-medium'>
+                          Full Name *
+                        </label>
+                        <Input
+                          id='name'
+                          name='name'
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          placeholder='John Doe'
+                          required
+                          disabled={isSending}
+                          className='bg-white/[0.02] border-border focus:border-gold/50'
+                        />
+                      </div>
+                      <div className='space-y-2'>
+                        <label htmlFor='email' className='text-sm font-medium'>
+                          Email Address *
+                        </label>
+                        <Input
+                          id='email'
+                          name='email'
+                          type='email'
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          placeholder='john@example.com'
+                          required
+                          disabled={isSending}
+                          className='bg-white/[0.02] border-border focus:border-gold/50'
+                        />
+                      </div>
+                    </div>
+
+                    <div className='space-y-2'>
+                      <label htmlFor='subject' className='text-sm font-medium'>
+                        Subject *
+                      </label>
+                      <Input
+                        id='subject'
+                        name='subject'
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        placeholder='Project inquiry, collaboration, etc.'
+                        required
+                        disabled={isSending}
+                        className='bg-white/[0.02] border-border focus:border-gold/50'
+                      />
+                    </div>
+
+                    <div className='space-y-2'>
+                      <label htmlFor='message' className='text-sm font-medium'>
+                        Message *
+                      </label>
+                      <Textarea
+                        id='message'
+                        name='message'
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        placeholder='Tell me about your project, timeline, budget, and any specific requirements...'
+                        rows={6}
+                        required
+                        disabled={isSending}
+                        className='bg-white/[0.03] border-white/10 focus:border-gold/50 resize-none'
+                      />
+                    </div>
+
+                    <Button
+                      type='submit'
+                      disabled={isSending}
+                      className='w-full bg-mist text-storm-deep hover:bg-mist/90 hover:shadow-glow-strong transition-all duration-300 disabled:opacity-70'
+                    >
+                      {isSending ? (
+                        <>
+                          <Loader2 className='mr-2 h-4 w-4 animate-spin' />{' '}
+                          Sending…
+                        </>
+                      ) : (
+                        <>
+                          <Send className='mr-2 h-4 w-4' /> Send Message
+                        </>
+                      )}
+                    </Button>
+                  </form>
                 </CardContent>
               </Card>
             </motion.div>
+          </div>
+
+          {/* Response Time Notice */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 1.6, duration: 0.6 }}
+            className='mt-12 text-center'
+          >
+            <Card className='glass-cloud max-w-2xl mx-auto'>
+              <CardContent className='p-6'>
+                <h3 className='font-heading font-semibold mb-2'>
+                  Quick Response Guarantee
+                </h3>
+                <p className='text-mist-soft text-sm'>
+                  I typically respond to all inquiries within{' '}
+                  <span className='gold-text font-medium'>24 hours</span>. For
+                  urgent matters, please use Telegram or call directly.
+                </p>
+              </CardContent>
+            </Card>
           </motion.div>
         </div>
-      </div>
-    </>
+      </section>
+      <Footer />
+    </div>
   );
 };
 

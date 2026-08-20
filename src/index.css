@@ -2,57 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
 All colors MUST be HSL.
+Theme: "Above the Clouds" — cinematic aviation x technology x atmospheric minimalism.
 */
 
 @layer base {
   :root {
-    /* Ermias Portfolio Dark Theme - Primary Colors */
-    --background: 0 0% 0%; /* Pure Black */
-    --foreground: 214 32% 91%; /* Soft Gray Text */
+    /* Ermias Portfolio - Above the Clouds (dark) */
+    --background: 210 24% 4%; /* Deep atmospheric black #080A0D */
+    --foreground: 210 12% 95%; /* Cloud white #F1F3F4 */
 
-    --surface: 0 0% 6%; /* Rich Black for cards/surfaces */
-    --surface-foreground: 214 32% 91%;
+    --surface: 210 18% 8%; /* Graphite #111419 */
+    --surface-foreground: 210 12% 95%;
 
-    --card: 0 0% 6%;
-    --card-foreground: 214 32% 91%;
+    --card: 210 18% 7%;
+    --card-foreground: 210 12% 95%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 214 32% 91%;
+    --popover: 210 18% 8%;
+    --popover-foreground: 210 12% 95%;
 
-    /* Electric Blue Accent System */
-    --primary: 217 91% 60%; /* Electric Blue */
-    --primary-foreground: 0 0% 0%;
-    --primary-glow: 217 91% 70%; /* Lighter blue for glows */
+    /* Warm Sunlight Accent System */
+    --primary: 42 58% 64%; /* Warm sunlight #D9B86C */
+    --primary-foreground: 210 24% 4%;
+    --primary-glow: 42 80% 72%; /* Soft golden highlight #F1D79A */
 
-    --secondary: 0 0% 10%; /* Slightly lighter than background */
-    --secondary-foreground: 214 32% 91%;
+    --secondary: 210 15% 12%; /* Storm gray surfaces */
+    --secondary-foreground: 210 12% 95%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 214 16% 47%;
+    --muted: 210 15% 11%;
+    --muted-foreground: 210 8% 62%; /* Cloud gray #737A82 (brightened for contrast) */
 
-    --accent: 217 91% 60%; /* Electric Blue */
-    --accent-foreground: 0 0% 0%;
+    --accent: 42 58% 64%; /* Warm sunlight */
+    --accent-foreground: 210 24% 4%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 12% 98%;
 
-    --border: 0 0% 15%; /* Subtle borders */
-    --input: 0 0% 10%;
-    --ring: 217 91% 60%;
+    --border: 210 12% 15%; /* Storm gray borders #20252B */
+    --input: 210 15% 11%;
+    --ring: 42 58% 64%;
 
     --radius: 0.75rem;
+
+    /* Extra palette tokens */
+    --sunlight: 42 58% 64%;
+    --gold-soft: 42 82% 78%;
+    --mist: 210 8% 77%; /* Mist gray #BFC4C8 */
+    --mist-soft: 210 8% 62%;
+    --storm: 210 15% 15%; /* Storm gray #20252B */
+    --storm-deep: 210 24% 4%;
+    --atmo-blue: 202 24% 54%; /* Optional subtle atmospheric blue #6E8FA3 */
+
+    /* Atmosphere gradients */
+    --atmo-hero: radial-gradient(
+      120% 95% at 50% -10%,
+      hsl(210 20% 9%) 0%,
+      hsl(210 24% 4%) 55%,
+      hsl(210 22% 6%) 100%
+    );
+    --atmo-mist: linear-gradient(
+      180deg,
+      hsl(210 24% 4%) 0%,
+      hsl(210 18% 8%) 45%,
+      hsl(210 15% 11%) 100%
+    );
+    --atmo-horizon: radial-gradient(
+      150% 120% at 50% 115%,
+      hsl(42 58% 64% / 0.15) 0%,
+      hsl(210 24% 4%) 45%
+    );
 
     /* Custom Portfolio Variables */
     --gradient-primary: linear-gradient(
       135deg,
-      hsl(217 91% 60%),
-      hsl(263 70% 62%)
+      hsl(0 0% 100%),
+      hsl(210 8% 78%)
     );
-    --gradient-surface: linear-gradient(145deg, hsl(0 0% 6%), hsl(0 0% 8%));
-    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.3);
-    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.4);
+    --gradient-gold: linear-gradient(135deg, hsl(42 82% 80%), hsl(42 58% 64%));
+    --gradient-surface: linear-gradient(
+      145deg,
+      hsl(210 18% 8%),
+      hsl(210 15% 10%)
+    );
+    --shadow-glow: 0 0 40px hsl(42 58% 64% / 0.15);
+    --shadow-glow-strong: 0 0 60px hsl(42 58% 64% / 0.25);
+    --shadow-card: 0 24px 60px hsl(210 24% 2% / 0.6);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Typography */
@@ -62,50 +97,76 @@ All colors MUST be HSL.
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   }
 
-  /* Light mode - Enhanced for beauty */
+  /* Light mode — Sunlit Mist */
   .light {
-    --background: 248 50% 98%; /* Snow White */
-    --foreground: 215 28% 17%;
+    --background: 210 30% 97%; /* Soft sky */
+    --foreground: 210 24% 10%;
 
     --surface: 0 0% 100%;
-    --surface-foreground: 215 28% 17%;
+    --surface-foreground: 210 24% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 28% 17%;
+    --card-foreground: 210 24% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 28% 17%;
+    --popover-foreground: 210 24% 10%;
 
-    --primary: 217 91% 55%; /* Deeper Blue */
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 217 91% 65%; /* Lighter blue for glows */
+    --primary: 42 62% 52%; /* Deeper gold for contrast */
+    --primary-foreground: 210 24% 4%;
+    --primary-glow: 42 70% 62%;
 
-    --secondary: 217 91% 96%; /* Blue-tinted secondary */
-    --secondary-foreground: 215 28% 17%;
+    --secondary: 210 20% 93%;
+    --secondary-foreground: 210 24% 10%;
 
-    --muted: 217 50% 96%; /* Subtle blue tint */
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 20% 94%;
+    --muted-foreground: 210 10% 42%;
 
-    --accent: 217 91% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 42 62% 52%;
+    --accent-foreground: 210 24% 4%;
 
-    --border: 217 30% 88%; /* Blue-tinted borders */
-    --input: 217 30% 94%;
-    --ring: 217 91% 55%;
+    --border: 210 18% 88%;
+    --input: 210 18% 92%;
+    --ring: 42 62% 52%;
 
-    /* Enhanced gradients for light mode */
+    --sunlight: 42 62% 52%;
+    --gold-soft: 42 82% 70%;
+    --mist: 210 14% 45%;
+    --mist-soft: 210 12% 55%;
+    --storm: 210 18% 88%;
+    --storm-deep: 210 30% 97%;
+    --atmo-blue: 202 24% 50%;
+
+    --atmo-hero: radial-gradient(
+      120% 95% at 50% -10%,
+      hsl(210 30% 99%) 0%,
+      hsl(210 30% 97%) 55%,
+      hsl(210 24% 94%) 100%
+    );
+    --atmo-mist: linear-gradient(
+      180deg,
+      hsl(210 30% 97%) 0%,
+      hsl(210 22% 95%) 100%
+    );
+    --atmo-horizon: radial-gradient(
+      150% 120% at 50% 115%,
+      hsl(42 70% 62% / 0.2) 0%,
+      hsl(210 30% 97%) 45%
+    );
+
     --gradient-primary: linear-gradient(
       135deg,
-      hsl(217 91% 55%),
-      hsl(263 70% 60%)
+      hsl(210 24% 20%),
+      hsl(210 10% 45%)
     );
+    --gradient-gold: linear-gradient(135deg, hsl(42 70% 62%), hsl(42 62% 52%));
     --gradient-surface: linear-gradient(
       145deg,
       hsl(0 0% 100%),
-      hsl(217 50% 98%)
+      hsl(210 20% 96%)
     );
-    --shadow-glow: 0 0 40px hsl(217 91% 55% / 0.25);
-    --shadow-card: 0 4px 20px hsl(217 50% 50% / 0.1);
+    --shadow-glow: 0 0 40px hsl(42 62% 52% / 0.18);
+    --shadow-glow-strong: 0 0 60px hsl(42 62% 52% / 0.25);
+    --shadow-card: 0 24px 60px hsl(210 20% 50% / 0.14);
   }
 }
 
@@ -138,7 +199,7 @@ All colors MUST be HSL.
 
   /* Selection styles */
   ::selection {
-    background: hsl(var(--primary) / 0.2);
+    background: hsl(var(--primary) / 0.25);
     color: hsl(var(--primary-foreground));
   }
 
@@ -152,7 +213,7 @@ All colors MUST be HSL.
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--border));
+    background: hsl(var(--storm));
     border-radius: 4px;
   }
 
@@ -162,17 +223,63 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Glow effects */
-  .glow-blue {
+  /* Hero name — white → silver with golden edge bleed */
+  .name-gradient {
+    background: linear-gradient(
+      180deg,
+      hsl(0 0% 100%) 0%,
+      hsl(210 8% 86%) 55%,
+      hsl(210 8% 72%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .light .name-gradient {
+    background: linear-gradient(
+      180deg,
+      hsl(210 24% 12%) 0%,
+      hsl(210 18% 30%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gold highlight text */
+  .gold-text {
+    color: hsl(var(--primary));
+  }
+
+  .light .gold-text {
+    color: hsl(var(--primary));
+  }
+
+  /* Gold soft glow shadow */
+  .glow-gold {
     box-shadow: var(--shadow-glow);
   }
 
-  .card-surface {
-    background: var(--gradient-surface);
-    box-shadow: var(--shadow-card);
+  .glow-gold-strong {
+    box-shadow: var(--shadow-glow-strong);
   }
 
-  /* Glassmorphism surface */
+  /* Gradient border card (gold, uses pseudo-element) */
+  .gradient-border {
+    position: relative;
+    background:
+      linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+      var(--gradient-gold) border-box;
+    border: 1px solid transparent;
+  }
+
+  .gradient-border:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Glassmorphism surface (theme aware) */
   .glass {
     background: hsl(0 0% 100% / 0.04);
     backdrop-filter: blur(12px);
@@ -181,34 +288,39 @@ All colors MUST be HSL.
   }
 
   .glass:hover {
-    border-color: hsl(217 91% 60% / 0.3);
+    border-color: hsl(var(--primary) / 0.3);
     background: hsl(0 0% 100% / 0.06);
   }
 
-  /* Gradient border card (uses pseudo-element) */
-  .gradient-border {
-    position: relative;
-    background:
-      linear-gradient(hsl(0 0% 6%), hsl(0 0% 6%)) padding-box,
-      var(--gradient-primary) border-box;
-    border: 1px solid transparent;
+  .light .glass {
+    background: hsl(var(--card) / 0.55);
+    border: 1px solid hsl(var(--border));
   }
 
-  .gradient-border:hover {
-    box-shadow: var(--shadow-glow);
+  /* Atmospheric cloud glass — darker, premium case-study panels */
+  .glass-cloud {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-card);
   }
 
-  /* Spotlight-on-hover card (radial gradient follows cursor) */
+  .glass-cloud:hover {
+    border-color: hsl(var(--primary) / 0.35);
+  }
+
+  /* Spotlight-on-hover card (radial gold light follows cursor) */
   .spotlight-card::before {
     content: '';
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     pointer-events: none;
     background: radial-gradient(
       400px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-      hsl(217 91% 60% / 0.12),
+      hsl(var(--primary) / 0.1),
       transparent 40%
     );
   }
@@ -224,7 +336,7 @@ All colors MUST be HSL.
     inset: 0;
     z-index: 100;
     pointer-events: none;
-    opacity: 0.03;
+    opacity: 0.02;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -246,7 +358,7 @@ All colors MUST be HSL.
     transform: scale(1.05);
   }
 
-  /* Gradient text */
+  /* Gradient text (white → silver, premium minimal) */
   .gradient-text {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
@@ -254,7 +366,7 @@ All colors MUST be HSL.
     background-clip: text;
   }
 
-  /* Button glow */
+  /* Button glow (subtle gold sheen sweep) */
   .btn-glow {
     position: relative;
     overflow: hidden;
@@ -270,7 +382,7 @@ All colors MUST be HSL.
     background: linear-gradient(
       90deg,
       transparent,
-      hsl(var(--primary) / 0.2),
+      hsl(var(--primary) / 0.18),
       transparent
     );
     transition: left 0.5s;
@@ -278,5 +390,67 @@ All colors MUST be HSL.
 
   .btn-glow:hover::before {
     left: 100%;
+  }
+
+  /* Mono technical label */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  /* Fine altitude rule (horizontal hairline used under headings) */
+  .alt-rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--primary) / 0.5),
+      transparent
+    );
+  }
+
+  /* Aircraft-window vignette (theme aware) */
+  .hero-vignette {
+    background: radial-gradient(
+      ellipse at center,
+      transparent 58%,
+      hsl(210 24% 4% / 0.55) 100%
+    );
+  }
+
+  .light .hero-vignette {
+    background: radial-gradient(
+      ellipse at center,
+      transparent 62%,
+      hsl(210 30% 60% / 0.35) 100%
+    );
+  }
+
+  /* Global rising sun — tamed in light mode so it stays a subtle haze */
+  .light .scrollsky-sun {
+    opacity: 0.04 !important;
+  }
+}
+
+/* Reduced motion — disable CSS animation & transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile perf — drop backdrop blur on glass surfaces (cheaper scrolling on phones) */
+@media (max-width: 767px) {
+  .glass,
+  .glass-cloud {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }

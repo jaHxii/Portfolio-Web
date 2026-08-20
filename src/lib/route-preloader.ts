@@ -12,6 +12,7 @@ export const routeLoaders = {
   '/skills': () => import('../pages/Skills'),
   '/experience': () => import('../pages/Experience'),
   '/contact': () => import('../pages/Contact'),
+  '/resume': () => import('../pages/Resume'),
 } as const;
 
 export type RouteKey = keyof typeof routeLoaders;
@@ -207,6 +208,7 @@ export class RoutePreloadManager {
       '/skills': ['/experience', '/contact'],
       '/experience': ['/contact', '/projects'],
       '/contact': ['/', '/projects'],
+      '/resume': ['/contact', '/projects'],
     };
 
     const related = relatedRoutes[currentPath] || [];

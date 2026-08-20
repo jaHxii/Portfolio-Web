@@ -57,6 +57,20 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        sunlight: 'hsl(var(--sunlight))',
+        gold: {
+          DEFAULT: 'hsl(var(--sunlight))',
+          soft: 'hsl(var(--gold-soft))',
+        },
+        mist: {
+          DEFAULT: 'hsl(var(--mist))',
+          soft: 'hsl(var(--mist-soft))',
+        },
+        storm: {
+          DEFAULT: 'hsl(var(--storm))',
+          deep: 'hsl(var(--storm-deep))',
+        },
+        'atmo-blue': 'hsl(var(--atmo-blue))',
       },
       fontFamily: {
         heading: ['Space Grotesk', 'Inter', 'sans-serif'],
@@ -65,10 +79,15 @@ export default {
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
+        'gradient-gold': 'var(--gradient-gold)',
         'gradient-surface': 'var(--gradient-surface)',
+        'atmo-hero': 'var(--atmo-hero)',
+        'atmo-mist': 'var(--atmo-mist)',
+        'atmo-horizon': 'var(--atmo-horizon)',
       },
       boxShadow: {
         glow: 'var(--shadow-glow)',
+        'glow-strong': 'var(--shadow-glow-strong)',
         card: 'var(--shadow-card)',
       },
       transitionTimingFunction: {
@@ -117,9 +136,21 @@ export default {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
         'pulse-glow': {
           '0%, 100%': { opacity: '0.4' },
           '50%': { opacity: '0.8' },
+        },
+        'cloud-drift': {
+          '0%, 100%': { transform: 'translateX(-3%) translateY(0)' },
+          '50%': { transform: 'translateX(3%) translateY(-10px)' },
+        },
+        'sun-breathe': {
+          '0%, 100%': { opacity: '0.55' },
+          '50%': { opacity: '1' },
         },
       },
       animation: {
@@ -132,7 +163,10 @@ export default {
         'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
         float: 'float 3s ease-in-out infinite',
         marquee: 'marquee 30s linear infinite',
+        'marquee-reverse': 'marquee-reverse 30s linear infinite',
         'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+        'cloud-drift': 'cloud-drift 26s ease-in-out infinite',
+        'sun-breathe': 'sun-breathe 9s ease-in-out infinite',
       },
     },
   },

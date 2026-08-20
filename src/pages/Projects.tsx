@@ -1,16 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ExternalLink, Github, Search } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ExternalLink, Search } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/Footer';
+import Atmosphere from '@/components/atmosphere/Atmosphere';
+import FlightLog from '@/components/ui/flight-log';
+import ConfirmCodeLink from '@/components/ui/confirm-code-link';
 import SEO from '@/components/seo/SEO';
 import StructuredData from '@/components/seo/StructuredData';
 import { useSEO } from '@/hooks/use-seo';
 import { useStructuredData } from '@/hooks/use-structured-data';
-import { TiltCard } from '@/components/ui/tilt-card';
 import DemoGallery from '@/components/sections/DemoGallery';
 import { MESOB_DEMO_IMAGES } from '@/lib/mesob-demo-images';
 import {
@@ -35,6 +38,15 @@ interface Project {
 }
 
 const CATEGORIES = ['All', 'Frontend', 'Full Stack', 'IT/DevOps'];
+
+const ALTITUDE_LAYERS = [
+  'FOUNDATION',
+  'SYSTEMS',
+  'NETWORK',
+  'INTELLIGENCE',
+  'APPLICATIONS',
+  'PLATFORM',
+];
 
 const Projects = () => {
   const seoProps = useSEO();
@@ -211,61 +223,62 @@ const Projects = () => {
       ))}
       <Navigation />
 
-      {/* Hero Section */}
-      <section className='pt-24 pb-16 bg-gradient-to-br from-background via-surface/30 to-background relative overflow-hidden'>
-        <div className='absolute -top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px] animate-pulse-glow' />
-        <div
-          className='absolute top-1/2 right-[-10%] w-80 h-80 bg-purple-600/10 rounded-full blur-[100px] animate-pulse-glow'
-          style={{ animationDelay: '2s' }}
-        />
-        <div className='container mx-auto px-4 relative z-10'>
+      {/* Hero */}
+      <section className='relative pt-36 pb-20 overflow-hidden'>
+        <Atmosphere />
+        <div className='relative z-10 container mx-auto px-4'>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className='text-center max-w-4xl mx-auto'
+            className='text-center max-w-3xl mx-auto'
           >
-            <div className='flex items-center justify-center gap-4 mb-4'>
-              <span className='font-mono text-primary text-sm'>02.</span>
-              <h1 className='text-4xl md:text-6xl font-bold font-heading tracking-tight'>
-                My <span className='gradient-text'>Projects</span>
-              </h1>
-            </div>
-            <p className='text-xl text-muted-foreground leading-relaxed'>
-              Real projects from my CV — systems, dashboards, and websites I
-              have designed and built.
+            <FlightLog
+              entries={[
+                'FLIGHT LOG / SELECTED WORK',
+                'WAYPOINT 04 · NORTH-WEST',
+                'ALTITUDE 28,000 FT · STABLE',
+                'CRUISING · SYSTEMS NOMINAL',
+              ]}
+            />
+            <h1 className='text-4xl md:text-6xl font-bold font-heading tracking-tight leading-tight'>
+              <span className='name-gradient'>Projects</span>
+            </h1>
+            <p className='mt-5 text-lg text-mist-soft leading-relaxed font-light'>
+              Systems, dashboards, and websites designed and built — each a
+              different altitude layer in an engineering climb.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Search & Filter */}
-      <section className='py-8'>
+      <section className='relative py-8'>
         <div className='container mx-auto px-4 max-w-6xl'>
-          <div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-8'>
+          <div className='flex flex-col md:flex-row gap-4 items-center justify-between mb-10'>
             <div className='flex flex-wrap gap-2 justify-center'>
               {CATEGORIES.map(category => (
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-300 border ${
                     activeCategory === category
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-background border border-border text-muted-foreground hover:border-primary/50'
+                      ? 'bg-gold/15 text-gold border-gold/50'
+                      : 'glass border-transparent text-mist-soft hover:border-gold/40 hover:text-foreground'
                   }`}
                 >
                   {category}
                 </button>
               ))}
             </div>
-            <div className='relative w-full md:w-64'>
-              <Search className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground' />
+            <div className='relative w-full md:w-72'>
+              <Search className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-mist-soft' />
               <Input
                 type='text'
                 placeholder='Search projects...'
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className='pl-10'
+                className='pl-10 bg-white/[0.02] border-border focus:border-gold/50'
                 aria-label='Search projects'
               />
             </div>
@@ -274,162 +287,171 @@ const Projects = () => {
       </section>
 
       {/* Projects Grid */}
-      <section className='py-16'>
-        <div className='container mx-auto px-4 max-w-6xl'>
+      <section className='relative py-16 overflow-hidden'>
+        <Atmosphere variant='mist' className='opacity-70' />
+        <div className='relative z-10 container mx-auto px-4 max-w-6xl'>
           <motion.div
             ref={ref}
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'
+            className='grid md:grid-cols-2 gap-8'
           >
-            {filteredProjects.map((project, index) => (
+            {filteredProjects.map(project => (
               <ProjectCard
                 key={project.title}
                 project={project}
-                index={index}
+                layer={ALTITUDE_LAYERS[projects.indexOf(project)] ?? 'SECTOR'}
+                number={projects.indexOf(project) + 1}
               />
             ))}
           </motion.div>
 
           {filteredProjects.length === 0 && (
-            <div className='text-center py-16 text-muted-foreground'>
+            <div className='text-center py-16 text-mist-soft'>
               No projects match your search.
             </div>
           )}
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
 
 const ProjectCard = ({
   project,
-  index,
+  layer,
+  number,
 }: {
   project: Project;
-  index: number;
+  layer: string;
+  number: number;
 }) => {
   const [demoOpen, setDemoOpen] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
+      transition={{ duration: 0.6 }}
       className='group'
     >
-      <TiltCard>
-        <Card className='glass h-full flex flex-col transition-all duration-300 group-hover:shadow-glow overflow-hidden'>
+      <Card className='glass-cloud h-full flex flex-col overflow-hidden rounded-2xl transition-all duration-300 group-hover:shadow-glow-strong'>
+        {/* Altitude header */}
+        <div className='px-7 pt-7 pb-5 flex items-center justify-between border-b border-white/5'>
+          <span className='font-mono text-sm tracking-[0.25em] gold-text'>
+            {String(number).padStart(2, '0')}
+          </span>
+          <span className='font-mono text-[10px] tracking-[0.3em] text-mist-soft/60'>
+            {layer}
+          </span>
+        </div>
+
+        <CardContent className='p-7 flex-1 flex flex-col'>
           {/* Project Image / Placeholder */}
-          <div className='relative overflow-hidden rounded-t-lg'>
+          <div className='relative overflow-hidden rounded-lg mb-6'>
             {project.image ? (
               <img
                 src={project.image}
                 alt={project.title}
-                className='w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300'
+                className='w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500'
               />
             ) : (
-              <div className='w-full h-48 bg-gradient-to-br from-primary/40 via-secondary/40 to-background flex items-center justify-center'>
-                <span className='text-6xl font-heading font-bold text-primary/60'>
+              <div className='w-full h-44 bg-gradient-to-br from-storm via-background to-background flex items-center justify-center'>
+                <span className='text-6xl font-heading font-bold gold-text/70'>
                   {project.title.charAt(0)}
                 </span>
               </div>
             )}
-            <div className='absolute top-4 left-4'>
-              <span className='px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full'>
+            <div className='absolute top-3 left-3'>
+              <span className='px-3 py-1 rounded-md border border-gold/40 bg-background/70 backdrop-blur-sm text-xs font-mono text-gold'>
                 {project.category}
               </span>
             </div>
+            {/* cloud/light texture on hover */}
+            <div
+              aria-hidden='true'
+              className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none'
+              style={{
+                background:
+                  'radial-gradient(circle at 70% 30%, hsl(42 58% 64% / 0.12), transparent 55%)',
+              }}
+            />
           </div>
 
-          <CardHeader>
-            <CardTitle className='group-hover:text-primary transition-colors text-lg'>
-              {project.title}
-            </CardTitle>
-          </CardHeader>
+          <h3 className='font-heading font-bold text-xl tracking-tight mb-3'>
+            {project.title}
+          </h3>
+          <p className='text-mist-soft leading-relaxed text-sm flex-1 mb-6'>
+            {project.description}
+          </p>
 
-          <CardContent className='space-y-4 flex-1 flex flex-col'>
-            <p className='text-muted-foreground leading-relaxed flex-1'>
-              {project.description}
-            </p>
-
-            {/* Metrics */}
-            {project.metrics && (
-              <div className='space-y-2'>
-                {project.metrics.map((metric, i) => (
-                  <div key={i} className='flex items-center gap-2 text-sm'>
-                    <div className='w-1.5 h-1.5 bg-primary rounded-full' />
-                    <span className='text-foreground/80'>{metric}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Tech Stack */}
-            <div className='flex flex-wrap gap-2'>
-              {project.tech.map(tech => (
-                <span
-                  key={tech}
-                  className='px-2 py-1 bg-background border border-border text-xs rounded-md hover:border-primary/50 transition-colors'
-                >
-                  {tech}
-                </span>
+          {/* Metrics */}
+          {project.metrics && (
+            <div className='space-y-2 mb-6'>
+              {project.metrics.map((metric, i) => (
+                <div key={i} className='flex items-center gap-2.5 text-sm'>
+                  <div className='w-1 h-1 bg-gold rounded-full' />
+                  <span className='text-foreground/80'>{metric}</span>
+                </div>
               ))}
             </div>
+          )}
 
-            {/* Links */}
-            {(project.github || project.demo || project.demoImages) && (
-              <div className='flex gap-3 pt-2'>
-                {project.github && (
+          {/* Tech Stack */}
+          <div className='flex flex-wrap gap-2 mb-7'>
+            {project.tech.map(tech => (
+              <span
+                key={tech}
+                className='glass rounded-md px-2.5 py-1 font-mono text-xs text-mist-soft'
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* Links */}
+          {(project.github || project.demo || project.demoImages) && (
+            <div className='flex gap-3 pt-1 mt-auto'>
+              {project.github && (
+                <ConfirmCodeLink
+                  href={project.github}
+                  projectName={project.title}
+                  className='glass flex-1 text-mist-soft hover:border-gold/60'
+                />
+              )}
+              {project.demoImages ? (
+                <Button
+                  size='sm'
+                  className='flex-1 bg-mist text-storm-deep hover:bg-mist/90'
+                  onClick={() => setDemoOpen(true)}
+                >
+                  <ExternalLink className='h-4 w-4 mr-2' />
+                  Demo
+                </Button>
+              ) : (
+                project.demo && (
                   <Button
-                    variant='outline'
                     size='sm'
-                    className='flex-1 group/btn'
+                    className='flex-1 bg-mist text-storm-deep hover:bg-mist/90'
                     asChild
                   >
                     <a
-                      href={project.github}
+                      href={project.demo}
                       target='_blank'
                       rel='noopener noreferrer'
                     >
-                      <Github className='h-4 w-4 mr-2 group-hover/btn:rotate-12 transition-transform' />
-                      Code
+                      <ExternalLink className='h-4 w-4 mr-2' />
+                      Demo
                     </a>
                   </Button>
-                )}
-                {project.demoImages ? (
-                  <Button
-                    size='sm'
-                    className='flex-1 group/btn bg-primary hover:bg-primary/90'
-                    onClick={() => setDemoOpen(true)}
-                  >
-                    <ExternalLink className='h-4 w-4 mr-2 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform' />
-                    Demo
-                  </Button>
-                ) : (
-                  project.demo && (
-                    <Button
-                      size='sm'
-                      className='flex-1 group/btn bg-primary hover:bg-primary/90'
-                      asChild
-                    >
-                      <a
-                        href={project.demo}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
-                        <ExternalLink className='h-4 w-4 mr-2 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform' />
-                        Demo
-                      </a>
-                    </Button>
-                  )
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </TiltCard>
+                )
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
       {project.demoImages && (
         <DemoGallery
           open={demoOpen}

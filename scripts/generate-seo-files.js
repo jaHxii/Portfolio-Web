@@ -43,6 +43,12 @@ const routes = [
     priority: 0.7,
     lastmod: new Date().toISOString(),
   },
+  {
+    url: '/resume',
+    changefreq: 'monthly',
+    priority: 0.6,
+    lastmod: new Date().toISOString(),
+  },
 ];
 
 const generateSitemap = async hostname => {
