@@ -110,7 +110,7 @@ const DemoGallery = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='max-w-4xl p-4 sm:p-6'>
         <DialogHeader>
-          <DialogTitle>{title} — Screenshots</DialogTitle>
+          <DialogTitle>{title} - Screenshots</DialogTitle>
           <DialogDescription>
             {index + 1} of {images.length} · Scroll to zoom, drag to pan
           </DialogDescription>

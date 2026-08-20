@@ -29,7 +29,7 @@ const FEATURED: CarouselProject[] = [
   {
     title: 'Melala Coffee',
     description:
-      'Responsive website for an authentic Ethiopian coffee shop in Addis Ababa — live on Netlify.',
+      'Responsive website for an authentic Ethiopian coffee shop in Addis Ababa - live on Netlify.',
     category: 'Frontend',
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Netlify'],
     github: 'https://github.com/jaHxii/melala-buna-brand',
@@ -56,7 +56,7 @@ const FEATURED: CarouselProject[] = [
     demoImages: MESOB_DEMO_IMAGES,
   },
   {
-    title: 'CareHub — Healthcare Management System',
+    title: 'CareHub - Healthcare Management System',
     description:
       'Fullstack clinic platform handling appointments, patient records, and prescriptions with PostgreSQL-enforced conflict-free scheduling and role-based access.',
     category: 'Full Stack',
@@ -68,7 +68,7 @@ const FEATURED: CarouselProject[] = [
   {
     title: 'Realtime Support Ops Dashboard',
     description:
-      'Real-time customer support ops dashboard streaming simulated ticket activity over WebSocket, visualized with a custom D3 chart and a virtualized 10,000-row live log — with offline fallback, filters, and 15 passing tests.',
+      'Real-time customer support ops dashboard streaming simulated ticket activity over WebSocket, visualized with a custom D3 chart and a virtualized 10,000-row live log - with offline fallback, filters, and 15 passing tests.',
     category: 'Frontend',
     tech: ['React', 'WebSocket', 'Data Visualization'],
     github: 'https://github.com/jaHxii/realtime-support-ops-dashboard.git',

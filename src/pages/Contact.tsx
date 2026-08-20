@@ -212,7 +212,7 @@ const Contact = () => {
             </h1>
             <p className='mt-6 text-lg text-mist-soft leading-relaxed font-light max-w-2xl mx-auto'>
               Whether you need technical support, infrastructure work, software
-              development, or an engineering-minded problem solver — let&apos;s
+              development, or an engineering-minded problem solver - let&apos;s
               talk.
             </p>
             <motion.div

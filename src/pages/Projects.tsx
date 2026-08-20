@@ -78,7 +78,7 @@ const Projects = () => {
       {
         title: 'MESOB IT Helpdesk Ticketing System',
         description:
-          'Automated IT support ticketing platform for managing helpdesk workflows — issue tracking, prioritization, and lifecycle management, improving coordination between technical staff and users.',
+          'Automated IT support ticketing platform for managing helpdesk workflows - issue tracking, prioritization, and lifecycle management, improving coordination between technical staff and users.',
         category: 'Full Stack',
         tech: ['Backend Logic', 'Workflow Management', 'Ticketing'],
         github: 'https://github.com/jaHxii/Mesob-Help_Desk.git',
@@ -92,9 +92,9 @@ const Projects = () => {
         demoImages: MESOB_DEMO_IMAGES,
       },
       {
-        title: 'CareHub — Healthcare Management System',
+        title: 'CareHub - Healthcare Management System',
         description:
-          'Fullstack platform for appointments, patient records, and prescriptions mirroring real clinic workflows. Conflict-free scheduling is enforced by a PostgreSQL tstzrange exclusion constraint — the database rejects overlapping appointments with a 409. Role-based access across Admin/Doctor/Patient, medical history as JSONB, and server-side PDF reports with per-user rate limiting.',
+          'Fullstack platform for appointments, patient records, and prescriptions mirroring real clinic workflows. Conflict-free scheduling is enforced by a PostgreSQL tstzrange exclusion constraint - the database rejects overlapping appointments with a 409. Role-based access across Admin/Doctor/Patient, medical history as JSONB, and server-side PDF reports with per-user rate limiting.',
         category: 'Full Stack',
         tech: [
           'React',
@@ -111,14 +111,14 @@ const Projects = () => {
           'End-to-end fullstack: React + Express + PostgreSQL',
           'Overlap-free scheduling via tstzrange exclusion constraint',
           'JWT + RBAC with row-level scoping',
-          'Medical history as JSONB — no schema migrations',
+          'Medical history as JSONB - no schema migrations',
         ],
         demoImages: CAREHUB_DEMO_IMAGES,
       },
       {
         title: 'Realtime Support Ops Dashboard',
         description:
-          'Real-time customer support ops dashboard streaming simulated ticket activity over WebSocket, visualized with a custom D3 chart and a virtualized 10,000-row live log — with offline fallback, filters, and 15 passing tests.',
+          'Real-time customer support ops dashboard streaming simulated ticket activity over WebSocket, visualized with a custom D3 chart and a virtualized 10,000-row live log - with offline fallback, filters, and 15 passing tests.',
         category: 'Frontend',
         tech: ['React', 'WebSocket', 'Data Visualization'],
         github: 'https://github.com/jaHxii/realtime-support-ops-dashboard.git',
@@ -151,7 +151,7 @@ const Projects = () => {
       {
         title: 'Melala Coffee',
         description:
-          'A modern, responsive website for Melala Coffee Wesen — an authentic Ethiopian coffee shop in Addis Ababa — with a menu, story, gallery, and location pages. Deployed and served worldwide via Netlify.',
+          'A modern, responsive website for Melala Coffee Wesen - an authentic Ethiopian coffee shop in Addis Ababa - with a menu, story, gallery, and location pages. Deployed and served worldwide via Netlify.',
         category: 'Frontend',
         tech: ['React', 'TypeScript', 'Tailwind CSS', 'Netlify'],
         github: 'https://github.com/jaHxii/melala-buna-brand',
@@ -164,9 +164,9 @@ const Projects = () => {
         ],
       },
       {
-        title: 'Sador Bar & Restaurant — Digital Menu',
+        title: 'Sador Bar & Restaurant - Digital Menu',
         description:
-          'Bilingual Amharic/English digital menu for Sador Bar and Restaurant — a small frontend with separate food and drinks/bar pages, categorized sections with prices including 15% VAT, and a QR code for scanning the menu on your phone. Deployed and served via Netlify.',
+          'Bilingual Amharic/English digital menu for Sador Bar and Restaurant - a small frontend with separate food and drinks/bar pages, categorized sections with prices including 15% VAT, and a QR code for scanning the menu on your phone. Deployed and served via Netlify.',
         category: 'Frontend',
         tech: ['React', 'TypeScript', 'Tailwind CSS', 'Netlify'],
         demo: 'https://sador-menu.netlify.app/',
@@ -245,7 +245,7 @@ const Projects = () => {
               <span className='name-gradient'>Projects</span>
             </h1>
             <p className='mt-5 text-lg text-mist-soft leading-relaxed font-light'>
-              Systems, dashboards, and websites designed and built — each a
+              Systems, dashboards, and websites designed and built - each a
               different altitude layer in an engineering climb.
             </p>
           </motion.div>

@@ -56,8 +56,8 @@ const Typewriter = ({ roles }: { roles: string[] }) => {
 };
 
 const MISSION_LINES = [
-  'Holding altitude above the cloud layer — keeping systems reliable.',
-  'Engineering calm above the storm — infrastructure, networks, code.',
+  'Holding altitude above the cloud layer - keeping systems reliable.',
+  'Engineering calm above the storm - infrastructure, networks, code.',
   'Systems online. Altitude steady. Building what lasts.',
   'Climbing through the clouds, one reliable system at a time.',
 ];
@@ -148,7 +148,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.7 }}
-            className='mt-6 text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed font-light'
+            className='mt-6 text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed font-heading font-normal'
           >
             Keeping systems reliable, solving complex technical problems, and
             building practical software across infrastructure, networks, web,

@@ -7,6 +7,7 @@ import About from '@/components/sections/About';
 import ProjectCarousel from '@/components/sections/ProjectCarousel';
 import { TechMarquee } from '@/components/ui/tech-marquee';
 import Atmosphere from '@/components/atmosphere/Atmosphere';
+import PreloadLink from '@/components/ui/preload-link';
 import SEO from '@/components/seo/SEO';
 import StructuredData from '@/components/seo/StructuredData';
 import { useSEO } from '@/hooks/use-seo';
@@ -79,16 +80,20 @@ const Index = () => {
                 <ProjectCarousel />
               </motion.div>
 
-              <motion.a
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                href='/projects'
-                className='inline-flex items-center mt-12 px-8 py-3.5 rounded-lg bg-mist text-storm-deep text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow-strong'
+                className='mt-12'
               >
-                View All Projects →
-              </motion.a>
+                <PreloadLink
+                  to='/projects'
+                  className='inline-flex items-center px-8 py-3.5 rounded-lg bg-mist text-storm-deep text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow-strong'
+                >
+                  View All Projects →
+                </PreloadLink>
+              </motion.div>
             </div>
           </div>
         </section>

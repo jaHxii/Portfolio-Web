@@ -144,8 +144,8 @@ const Resume = () => {
   return (
     <>
       <SEO
-        title='Resume — Ermias Lemesa Bayisa'
-        description='Resume of Ermias Lemesa Bayisa — Computer Engineer, IT Support Specialist and Hardware Engineer based in Addis Ababa, Ethiopia.'
+        title='Resume - Ermias Lemesa Bayisa'
+        description='Resume of Ermias Lemesa Bayisa - Computer Engineer, IT Support Specialist and Hardware Engineer based in Addis Ababa, Ethiopia.'
         keywords={[
           'resume',
           'CV',

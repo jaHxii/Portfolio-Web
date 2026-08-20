@@ -31,7 +31,7 @@ const Experience = () => {
       startYear: undefined,
       endYear: undefined,
       description:
-        'Providing enterprise IT support across multiple office locations — diagnosing network, printer, and hardware faults and resolving helpdesk tickets within SLAs.',
+        'Providing enterprise IT support across multiple office locations - diagnosing network, printer, and hardware faults and resolving helpdesk tickets within SLAs.',
       achievements: [
         'Diagnose and resolve network, printer, and hardware issues across multiple office locations',
         'Configure VPNs, cross-network folder sharing, and Wi-Fi troubleshooting for multi-floor environments',
@@ -174,7 +174,7 @@ const Experience = () => {
               <span className='name-gradient'>Experience</span>
             </h1>
             <p className='mt-5 text-lg text-mist-soft leading-relaxed font-light max-w-2xl mx-auto'>
-              A rising trajectory — from AI/ML intern to senior IT support,
+              A rising trajectory - from AI/ML intern to senior IT support,
               climbing through hardware and systems.
             </p>
           </motion.div>

@@ -80,7 +80,7 @@ const disciplines = [
 const achievements = [
   {
     icon: GraduationCap,
-    text: 'B.Sc Computer Engineering — University of Gondar (CGPA: 3.42/4.0)',
+    text: 'B.Sc Computer Engineering - University of Gondar (CGPA: 3.42/4.0)',
   },
   {
     icon: Award,
@@ -131,7 +131,7 @@ const About = () => {
               transition={{ delay: 0.3, duration: 0.6 }}
               className='max-w-2xl text-lg text-mist-soft leading-relaxed font-light'
             >
-              Computer Engineering graduate and Senior IT Support specialist —
+              Computer Engineering graduate and Senior IT Support specialist,
               keeping enterprise systems reliable from hardware and networking
               to helpdesk automation.
             </motion.p>
@@ -147,13 +147,13 @@ const About = () => {
               className='lg:col-span-3'
             >
               <div className='glass-cloud rounded-xl p-8 h-full space-y-5'>
-                <p className='text-lg text-foreground/90 leading-relaxed'>
+                <p className='text-lg text-foreground/90 leading-relaxed font-heading font-normal'>
                   I combine practical IT infrastructure skills with software
-                  development — building tools like the MESOB helpdesk ticketing
+                  development - building tools like the MESOB helpdesk ticketing
                   system and rental management platforms that solve real
                   operational problems.
                 </p>
-                <p className='text-lg text-foreground/80 leading-relaxed font-light'>
+                <p className='text-lg text-foreground/80 leading-relaxed font-heading font-normal'>
                   From diagnosing network faults in multi-floor offices to
                   training machine learning models, I work across the full
                   technology stack with a calm, engineering mindset.

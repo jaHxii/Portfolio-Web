@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import {
   preloadRoute,
@@ -71,9 +71,11 @@ describe('Code Splitting', () => {
         .mockImplementation(() => {});
 
       render(
-        <RouteErrorBoundary>
-          <ThrowError shouldThrow={true} />
-        </RouteErrorBoundary>
+        <MemoryRouter>
+          <RouteErrorBoundary>
+            <ThrowError shouldThrow={true} />
+          </RouteErrorBoundary>
+        </MemoryRouter>
       );
 
       expect(

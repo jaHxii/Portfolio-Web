@@ -2,6 +2,7 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 interface Props {
   children: ReactNode;
@@ -133,9 +134,9 @@ class RouteErrorBoundary extends Component<Props, State> {
               className='text-sm text-muted-foreground'
             >
               If the problem persists, please{' '}
-              <a href='/contact' className='text-primary hover:underline'>
+              <Link to='/contact' className='text-primary hover:underline'>
                 contact support
-              </a>
+              </Link>
               .
             </motion.p>
           </motion.div>
