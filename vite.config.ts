@@ -35,8 +35,6 @@ export default defineConfig(({ mode }) => ({
           'ui-vendor': ['framer-motion', 'lucide-react'],
           'radix-vendor': [
             '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-tabs',
             '@radix-ui/react-toast',
             '@radix-ui/react-tooltip',
           ],

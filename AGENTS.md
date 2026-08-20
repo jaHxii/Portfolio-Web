@@ -21,10 +21,13 @@ All pages are lazy-loaded in `src/App.tsx`; add new routes ABOVE the catch-all `
 - `src/hooks/use-seo.ts` — `pageSEOConfig` (per-page meta tags)
 - `src/lib/sitemap-generator.ts` (TS source) **and** `scripts/generate-seo-files.js` (build script) — sitemap route lists, kept in sync
 
+> Current drift: `/resume` is registered in `App.tsx` but missing from `route-preloader.ts`, `use-seo.ts`, and both sitemap route lists. Propagate it if you touch routes.
+
 ## TypeScript & lint strictness
 
 - tsconfig is very strict: `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noPropertyAccessFromIndexSignature`. Indexed access yields `T | undefined`; optional props must be passed exactly or not at all.
 - ESLint enforces jsx-a11y rules as **errors** (`alt-text`, `anchor-has-content`, `click-events-have-key-events`, …) and `@typescript-eslint/no-unused-vars` as error.
+- ESLint only lints `**/*.{ts,tsx}`; config files and `scripts/*.js` (e.g. `generate-seo-files.js`) are ignored and never linted.
 - Prettier: single quotes, `jsxSingleQuote`, semicolons, print width 80.
 
 ## Paths & env

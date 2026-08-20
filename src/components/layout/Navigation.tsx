@@ -58,8 +58,10 @@ const Navigation = () => {
         <div className='flex items-center justify-between h-16'>
           {/* Logo */}
           <PreloadLink to='/' className='flex items-center space-x-2 group'>
-            <div className='w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center group-hover:shadow-glow transition-all duration-300'>
-              <span className='text-black font-bold text-lg'>E</span>
+            <div className='w-9 h-9 bg-gradient-primary rounded-lg flex items-center justify-center group-hover:shadow-glow transition-all duration-300'>
+              <span className='text-primary-foreground font-heading font-bold text-sm'>
+                EL
+              </span>
             </div>
             <span className='font-heading font-semibold text-lg gradient-text'>
               Ermias Lemesa

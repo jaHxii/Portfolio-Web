@@ -58,14 +58,6 @@ const PROJECTS = [
     ],
   },
   {
-    title: 'Progressive Web Application (E-Commerce Platform)',
-    bullets: [
-      'Built a PWA with offline capabilities and caching strategies',
-      'Designed responsive user interface and product management modules',
-      'Implemented performance optimization techniques',
-    ],
-  },
-  {
     title: 'Local Network Printer Information Collector',
     bullets: [
       'Developed a Windows executable tool for scanning printers on a local network',
@@ -116,11 +108,13 @@ const EXPERIENCE = [
 const TECH_SKILLS = [
   {
     label: 'IT & Infrastructure',
-    value: 'IT Infrastructure Support, System Troubleshooting, Process Automation, Technical Documentation',
+    value:
+      'IT Infrastructure Support, System Troubleshooting, Process Automation, Technical Documentation',
   },
   {
     label: 'Programming & Data',
-    value: 'Python Programming, Machine Learning Fundamentals, Database Design & SQL',
+    value:
+      'Python Programming, Machine Learning Fundamentals, Database Design & SQL',
   },
   {
     label: 'Development',

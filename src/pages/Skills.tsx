@@ -89,8 +89,11 @@ const Skills = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className='text-4xl md:text-5xl font-bold font-heading mb-6'
+                className='text-4xl md:text-5xl font-bold font-heading tracking-tight mb-4'
               >
+                <span className='font-mono text-primary text-sm md:text-base mr-3'>
+                  05.
+                </span>
                 Technical <span className='gradient-text'>Skills</span>
               </motion.h1>
               <motion.p
@@ -102,12 +105,6 @@ const Skills = () => {
                 Practical, hands-on expertise across IT infrastructure support,
                 hardware, networking, programming, and web development.
               </motion.p>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={inView ? { width: 100 } : {}}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className='h-1 bg-gradient-primary mx-auto rounded-full mt-8'
-              />
             </div>
 
             {/* Skills Grid */}
@@ -123,7 +120,7 @@ const Skills = () => {
                   }}
                   className='group'
                 >
-                  <Card className='card-surface border-border/50 hover:border-primary/30 transition-all duration-300 h-full'>
+                  <Card className='glass h-full transition-all duration-300 group-hover:shadow-glow'>
                     <CardHeader className='pb-4'>
                       <CardTitle className='flex items-center gap-3'>
                         <div

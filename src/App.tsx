@@ -1,15 +1,15 @@
 import React, { Suspense, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Toaster } from '@/components/ui/toaster';
-import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import LoadingFallback from './components/layout/LoadingFallback';
 import RouteErrorBoundary from './components/layout/RouteErrorBoundary';
-import PerformanceDashboard from './components/ui/performance-dashboard';
 import { preloadCriticalRoutes } from './lib/route-preloader';
-import { initPerformanceMonitoring } from './lib/performance-monitor';
 import { SkipLink } from './components/accessibility/SkipLink';
+import { ScrollProgress } from './components/ui/scroll-progress';
+import { CursorGlow } from './components/ui/cursor-glow';
+import { BackToTop } from './components/ui/back-to-top';
 
 // Lazy load all page components for code splitting
 const Index = React.lazy(() => import('./pages/Index'));
@@ -20,46 +20,75 @@ const Contact = React.lazy(() => import('./pages/Contact'));
 const Resume = React.lazy(() => import('./pages/Resume'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
-const queryClient = new QueryClient();
+// Performance dashboard — dev only, split into its own chunk
+const PerformanceDashboard = React.lazy(
+  () => import('./components/ui/performance-dashboard')
+);
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode='wait'>
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -12 }}
+        transition={{ duration: 0.25, ease: 'easeOut' }}
+      >
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes location={location}>
+            <Route path='/' element={<Index />} />
+            <Route path='/projects' element={<Projects />} />
+            <Route path='/skills' element={<Skills />} />
+            <Route path='/experience' element={<Experience />} />
+            <Route path='/contact' element={<Contact />} />
+            <Route path='/resume' element={<Resume />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 const App = () => {
   useEffect(() => {
-    // Initialize performance monitoring
-    initPerformanceMonitoring();
-
     // Preload critical routes on app initialization
     preloadCriticalRoutes();
+
+    // Performance monitoring is dev-only; load on demand to keep it out of prod
+    if (import.meta.env.DEV) {
+      void import('./lib/performance-monitor').then(
+        ({ initPerformanceMonitoring }) => initPerformanceMonitoring()
+      );
+    }
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <SkipLink targetId='main-content' />
-          <div id='main-content' tabIndex={-1}>
-            <RouteErrorBoundary>
-              <Suspense fallback={<LoadingFallback />}>
-                <Routes>
-                  <Route path='/' element={<Index />} />
-                  <Route path='/projects' element={<Projects />} />
-                  <Route path='/skills' element={<Skills />} />
-                  <Route path='/experience' element={<Experience />} />
-                  <Route path='/contact' element={<Contact />} />
-                  <Route path='/resume' element={<Resume />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path='*' element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </RouteErrorBoundary>
-          </div>
+    <TooltipProvider>
+      <Toaster />
+      <BrowserRouter>
+        <SkipLink targetId='main-content' />
+        <ScrollProgress />
+        <CursorGlow />
+        <BackToTop />
+        <div id='main-content' tabIndex={-1}>
+          <RouteErrorBoundary>
+            <AnimatedRoutes />
+          </RouteErrorBoundary>
+        </div>
 
-          {/* Performance Dashboard (development only by default) */}
-          <PerformanceDashboard />
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+        {/* Performance Dashboard (development only) */}
+        {import.meta.env.DEV && (
+          <Suspense fallback={null}>
+            <PerformanceDashboard />
+          </Suspense>
+        )}
+      </BrowserRouter>
+    </TooltipProvider>
   );
 };
 

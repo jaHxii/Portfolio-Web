@@ -106,7 +106,12 @@ const Experience = () => {
         'Prepared technical documentation and research summaries',
         'Collaborated with cross-functional technical teams',
       ],
-      technologies: ['Python', 'Data Preprocessing', 'Machine Learning', 'Chatbots'],
+      technologies: [
+        'Python',
+        'Data Preprocessing',
+        'Machine Learning',
+        'Chatbots',
+      ],
       impact: {
         data: 'ML data pipelines',
         models: 'Training & evaluation',
@@ -176,8 +181,11 @@ const Experience = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className='text-4xl md:text-5xl font-bold font-heading mb-6'
+                className='text-4xl md:text-5xl font-bold font-heading tracking-tight mb-4'
               >
+                <span className='font-mono text-primary text-sm md:text-base mr-3'>
+                  03.
+                </span>
                 Professional <span className='gradient-text'>Experience</span>
               </motion.h1>
               <motion.p
@@ -190,12 +198,6 @@ const Experience = () => {
                 engineering, and AI/ML across ROTECH, Addis Mesob, and the
                 Ethiopian Artificial Intelligence Institute.
               </motion.p>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={inView ? { width: 100 } : {}}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className='h-1 bg-gradient-primary mx-auto rounded-full mt-8'
-              />
             </div>
 
             {/* Timeline */}
@@ -220,7 +222,7 @@ const Experience = () => {
 
                       {/* Content Card */}
                       <div className='md:ml-20'>
-                        <Card className='card-surface border-border/50 hover:border-primary/30 transition-all duration-300 hover-lift'>
+                        <Card className='glass hover-lift transition-all duration-300'>
                           <CardHeader>
                             <div className='flex flex-col md:flex-row md:items-start md:justify-between gap-4'>
                               <div className='space-y-2'>
@@ -334,14 +336,12 @@ const Experience = () => {
               transition={{ delay: 1.6, duration: 0.8 }}
               className='mt-20'
             >
-              <h2 className='text-3xl font-bold text-center mb-12'>
+              <h2 className='text-3xl font-bold text-center mb-12 font-heading tracking-tight'>
+                <span className='font-mono text-primary text-sm mr-3'>04.</span>
                 Education
               </h2>
               {education.map((edu, index) => (
-                <Card
-                  key={index}
-                  className='card-surface border-border/50 hover:border-primary/30 transition-all duration-300'
-                >
+                <Card key={index} className='glass transition-all duration-300'>
                   <CardHeader>
                     <CardTitle className='flex items-center gap-3'>
                       <Users className='h-6 w-6 text-primary' />
@@ -363,7 +363,9 @@ const Experience = () => {
                   <CardContent>
                     <div className='space-y-4'>
                       <div>
-                        <h4 className='font-semibold mb-2'>Final Year Project</h4>
+                        <h4 className='font-semibold mb-2'>
+                          Final Year Project
+                        </h4>
                         <p className='text-muted-foreground text-sm'>
                           {edu.finalYearProject}
                         </p>

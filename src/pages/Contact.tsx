@@ -198,8 +198,11 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className='text-4xl md:text-5xl font-bold font-heading mb-6'
+                className='text-4xl md:text-5xl font-bold font-heading tracking-tight mb-4'
               >
+                <span className='font-mono text-primary text-sm md:text-base mr-3'>
+                  06.
+                </span>
                 Let's <span className='gradient-text'>Connect</span>
               </motion.h1>
               <motion.p
@@ -229,7 +232,7 @@ const Contact = () => {
                   animate={inView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.8, duration: 0.6 }}
                 >
-                  <Card className='card-surface border-border/50'>
+                  <Card className='glass'>
                     <CardHeader>
                       <CardTitle>Contact Information</CardTitle>
                     </CardHeader>
@@ -289,7 +292,7 @@ const Contact = () => {
                   animate={inView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 1.2, duration: 0.6 }}
                 >
-                  <Card className='card-surface border-border/50'>
+                  <Card className='glass'>
                     <CardHeader>
                       <CardTitle>Connect Online</CardTitle>
                     </CardHeader>
@@ -331,7 +334,7 @@ const Contact = () => {
                   animate={inView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 1.6, duration: 0.6 }}
                 >
-                  <Card className='card-surface border-border/50'>
+                  <Card className='glass'>
                     <CardHeader>
                       <CardTitle className='flex items-center gap-2'>
                         <Clock className='h-5 w-5 text-primary' />
@@ -364,7 +367,7 @@ const Contact = () => {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className='lg:col-span-2'
               >
-                <Card className='card-surface border-border/50'>
+                <Card className='glass'>
                   <CardHeader>
                     <CardTitle>Send me a message</CardTitle>
                     <p className='text-muted-foreground'>
@@ -483,7 +486,7 @@ const Contact = () => {
               transition={{ delay: 1.8, duration: 0.6 }}
               className='mt-12 text-center'
             >
-              <Card className='card-surface border-border/50 max-w-2xl mx-auto'>
+              <Card className='glass max-w-2xl mx-auto'>
                 <CardContent className='p-6'>
                   <h3 className='font-semibold mb-2'>
                     Quick Response Guarantee

@@ -45,14 +45,19 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Custom Portfolio Variables */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 70%));
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(217 91% 60%),
+      hsl(263 70% 62%)
+    );
     --gradient-surface: linear-gradient(145deg, hsl(0 0% 6%), hsl(0 0% 8%));
     --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.3);
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.4);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Typography */
-    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading:
+      'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
   }
@@ -89,8 +94,16 @@ All colors MUST be HSL.
     --ring: 217 91% 55%;
 
     /* Enhanced gradients for light mode */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 55%), hsl(217 91% 65%));
-    --gradient-surface: linear-gradient(145deg, hsl(0 0% 100%), hsl(217 50% 98%));
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(217 91% 55%),
+      hsl(263 70% 60%)
+    );
+    --gradient-surface: linear-gradient(
+      145deg,
+      hsl(0 0% 100%),
+      hsl(217 50% 98%)
+    );
     --shadow-glow: 0 0 40px hsl(217 91% 55% / 0.25);
     --shadow-card: 0 4px 20px hsl(217 50% 50% / 0.1);
   }
@@ -102,12 +115,17 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-body antialiased grain;
     font-family: var(--font-body);
   }
 
   /* Typography */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     font-weight: 600;
     line-height: 1.2;
@@ -154,6 +172,62 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-card);
   }
 
+  /* Glassmorphism surface */
+  .glass {
+    background: hsl(0 0% 100% / 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(0 0% 100% / 0.08);
+  }
+
+  .glass:hover {
+    border-color: hsl(217 91% 60% / 0.3);
+    background: hsl(0 0% 100% / 0.06);
+  }
+
+  /* Gradient border card (uses pseudo-element) */
+  .gradient-border {
+    position: relative;
+    background:
+      linear-gradient(hsl(0 0% 6%), hsl(0 0% 6%)) padding-box,
+      var(--gradient-primary) border-box;
+    border: 1px solid transparent;
+  }
+
+  .gradient-border:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Spotlight-on-hover card (radial gradient follows cursor) */
+  .spotlight-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    background: radial-gradient(
+      400px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      hsl(217 91% 60% / 0.12),
+      transparent 40%
+    );
+  }
+
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Subtle film-grain texture overlay */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
   /* Hover animations */
   .hover-lift {
     transition: var(--transition-smooth);
@@ -193,7 +267,12 @@ All colors MUST be HSL.
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--primary) / 0.2),
+      transparent
+    );
     transition: left 0.5s;
   }
 

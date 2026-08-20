@@ -7,7 +7,8 @@ interface PageSEOConfig {
 }
 
 const defaultSEO: SEOProps = {
-  title: 'Ermias Lemesa - Computer Engineer | IT Support Specialist | Hardware Engineer',
+  title:
+    'Ermias Lemesa - Computer Engineer | IT Support Specialist | Hardware Engineer',
   description:
     'Computer Engineer and Senior IT Support Specialist with hands-on experience in hardware, networking, helpdesk, and AI/ML. Skilled in Python, SQL, web applications, and process automation.',
   keywords: [
@@ -43,14 +44,13 @@ const pageSEOConfig: PageSEOConfig = {
   '/projects': {
     title: 'Projects - Portfolio Showcase',
     description:
-      'Explore my real projects: KIRAY rental management, MESOB IT helpdesk ticketing, analytics dashboards, e-commerce PWA, printer asset monitoring, and Melala Coffee.',
+      'Explore my real projects: KIRAY rental management, MESOB IT helpdesk ticketing, analytics dashboards, printer asset monitoring, and Melala Coffee.',
     keywords: [
       'projects',
       'portfolio',
       'kiray',
       'it helpdesk',
       'analytics dashboard',
-      'pwa',
       'melala coffee',
     ],
     type: 'website',
