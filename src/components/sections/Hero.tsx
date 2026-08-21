@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Download, Github, Mail, Plane, Send } from 'lucide-react';
-import { TechMarquee } from '@/components/ui/tech-marquee';
 
 const ROLES = [
   'IT Systems Engineer',
@@ -29,11 +28,15 @@ const Typewriter = ({ roles }: { roles: string[] }) => {
     const current = role ?? '';
     const speed = deleting ? 30 : 70;
 
+    let pauseTimer: ReturnType<typeof setTimeout> | null = null;
+
     const timeout = setTimeout(() => {
       if (!deleting) {
         const next = current.slice(0, text.length + 1);
         setText(next);
-        if (next === current) setTimeout(() => setDeleting(true), 1500);
+        if (next === current) {
+          pauseTimer = setTimeout(() => setDeleting(true), 1500);
+        }
       } else {
         const next = current.slice(0, text.length - 1);
         setText(next);
@@ -44,7 +47,10 @@ const Typewriter = ({ roles }: { roles: string[] }) => {
       }
     }, speed);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      if (pauseTimer) clearTimeout(pauseTimer);
+    };
   }, [text, deleting, roleIndex, roles]);
 
   return (
@@ -216,9 +222,6 @@ const Hero = () => {
               </motion.a>
             ))}
           </motion.div>
-
-          {/* Skill indicators */}
-          <TechMarquee />
         </div>
       </motion.div>
 

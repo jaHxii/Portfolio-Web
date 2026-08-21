@@ -33,7 +33,7 @@ const CursorGlow = () => {
     <div
       ref={glowRef}
       aria-hidden='true'
-      className='pointer-events-none fixed top-0 left-0 z-0 hidden md:block w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full'
+      className='pointer-events-none cursor-glow fixed top-0 left-0 z-0 hidden md:block w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full'
       style={{
         background:
           'radial-gradient(circle, hsl(var(--primary) / 0.07) 0%, transparent 60%)',

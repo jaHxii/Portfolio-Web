@@ -47,7 +47,9 @@ const Contact = () => {
     email: '',
     subject: '',
     message: '',
+    website: '', // honeypot — bots fill this
   });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const contactMethods = [
     {
@@ -123,8 +125,44 @@ const Contact = () => {
     }
   };
 
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+
+    // Honeypot check
+    if (formData.website) {
+      return false; // silently reject bots
+    }
+
+    const name = formData.name.trim();
+    if (name.length < 2) {
+      errors.name = 'Name must be at least 2 characters.';
+    }
+
+    const email = formData.email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+
+    const subject = formData.subject.trim();
+    if (subject.length < 3) {
+      errors.subject = 'Subject must be at least 3 characters.';
+    }
+
+    const message = formData.message.trim();
+    if (message.length < 10) {
+      errors.message = 'Message must be at least 10 characters.';
+    } else if (message.length > 2000) {
+      errors.message = 'Message must be under 2000 characters.';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
 
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -435,7 +473,23 @@ const Contact = () => {
                     ref={formRef}
                     onSubmit={handleSubmit}
                     className='space-y-6'
+                    noValidate
                   >
+                    {/* Honeypot — hidden from humans, visible to bots */}
+                    <div
+                      className='absolute opacity-0 h-0 overflow-hidden'
+                      aria-hidden='true'
+                    >
+                      <label htmlFor='website'>Leave this empty</label>
+                      <Input
+                        id='website'
+                        name='website'
+                        value={formData.website}
+                        onChange={handleInputChange}
+                        tabIndex={-1}
+                        autoComplete='off'
+                      />
+                    </div>
                     <div className='grid md:grid-cols-2 gap-4'>
                       <div className='space-y-2'>
                         <label htmlFor='name' className='text-sm font-medium'>
@@ -449,8 +503,14 @@ const Contact = () => {
                           placeholder='John Doe'
                           required
                           disabled={isSending}
+                          aria-invalid={!!formErrors.name}
                           className='bg-white/[0.02] border-border focus:border-gold/50'
                         />
+                        {formErrors.name && (
+                          <p className='text-xs text-destructive'>
+                            {formErrors.name}
+                          </p>
+                        )}
                       </div>
                       <div className='space-y-2'>
                         <label htmlFor='email' className='text-sm font-medium'>
@@ -465,15 +525,21 @@ const Contact = () => {
                           placeholder='john@example.com'
                           required
                           disabled={isSending}
+                          aria-invalid={!!formErrors.email}
                           className='bg-white/[0.02] border-border focus:border-gold/50'
                         />
+                        {formErrors.email && (
+                          <p className='text-xs text-destructive'>
+                            {formErrors.email}
+                          </p>
+                        )}
                       </div>
                     </div>
 
                     <div className='space-y-2'>
                       <label htmlFor='subject' className='text-sm font-medium'>
                         Subject *
-                      </label>
+                      </label>{' '}
                       <Input
                         id='subject'
                         name='subject'
@@ -482,8 +548,14 @@ const Contact = () => {
                         placeholder='Project inquiry, collaboration, etc.'
                         required
                         disabled={isSending}
+                        aria-invalid={!!formErrors.subject}
                         className='bg-white/[0.02] border-border focus:border-gold/50'
                       />
+                      {formErrors.subject && (
+                        <p className='text-xs text-destructive'>
+                          {formErrors.subject}
+                        </p>
+                      )}
                     </div>
 
                     <div className='space-y-2'>
@@ -499,8 +571,17 @@ const Contact = () => {
                         rows={6}
                         required
                         disabled={isSending}
+                        aria-invalid={!!formErrors.message}
                         className='bg-white/[0.03] border-white/10 focus:border-gold/50 resize-none'
                       />
+                      {formErrors.message && (
+                        <p className='text-xs text-destructive'>
+                          {formErrors.message}
+                        </p>
+                      )}
+                      <p className='text-xs text-mist-soft/60 text-right'>
+                        {formData.message.length}/2000
+                      </p>
                     </div>
 
                     <Button

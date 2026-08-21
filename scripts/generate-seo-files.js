@@ -8,7 +8,7 @@ import { Readable } from 'stream';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const HOSTNAME = process.env.VITE_SITE_URL || 'https://portfolio.example.com';
+const HOSTNAME = process.env.VITE_SITE_URL || 'https://__SITE_URL__';
 const OUTPUT_DIR = join(__dirname, '../dist');
 
 // Define routes directly in the script

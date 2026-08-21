@@ -76,25 +76,33 @@ export function isRoutePreloaded(path: string): boolean {
 /**
  * Preload route on hover/focus with debouncing
  */
-let preloadTimeout: NodeJS.Timeout | null = null;
+const preloadTimeouts = new Map<string, NodeJS.Timeout>();
 
 export function scheduleRoutePreload(path: string, delay: number = 100): void {
-  if (preloadTimeout) {
-    clearTimeout(preloadTimeout);
-  }
+  // Cancel any existing timeout for this specific path
+  const existing = preloadTimeouts.get(path);
+  if (existing) clearTimeout(existing);
 
-  preloadTimeout = setTimeout(() => {
+  const timeout = setTimeout(() => {
+    preloadTimeouts.delete(path);
     preloadRoute(path);
   }, delay);
+  preloadTimeouts.set(path, timeout);
 }
 
 /**
- * Cancel scheduled preload
+ * Cancel scheduled preload for a specific path (or all if omitted)
  */
-export function cancelScheduledPreload(): void {
-  if (preloadTimeout) {
-    clearTimeout(preloadTimeout);
-    preloadTimeout = null;
+export function cancelScheduledPreload(path?: string): void {
+  if (path) {
+    const timeout = preloadTimeouts.get(path);
+    if (timeout) {
+      clearTimeout(timeout);
+      preloadTimeouts.delete(path);
+    }
+  } else {
+    preloadTimeouts.forEach(timeout => clearTimeout(timeout));
+    preloadTimeouts.clear();
   }
 }
 
@@ -132,8 +140,8 @@ export function useRoutePreloader() {
  * Preload critical routes on app initialization
  */
 export function preloadCriticalRoutes(): void {
-  // Preload the most important routes
-  const criticalRoutes = ['/', '/projects'];
+  // Preload the most important routes (skip '/' since it's already loaded)
+  const criticalRoutes = ['/projects', '/skills'];
 
   // Use requestIdleCallback if available, otherwise setTimeout
   if ('requestIdleCallback' in window) {

@@ -2,7 +2,7 @@
  * Performance monitoring service with Core Web Vitals tracking
  */
 
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { onCLS, onFCP, onINP, onLCP, onTTFB, Metric } from 'web-vitals';
 
 export interface PerformanceMetrics {
@@ -235,7 +235,7 @@ class PerformanceMonitor {
           // Send long task data to analytics
           longTasks.forEach(task => {
             // Create a simple analytics event for long tasks
-            if (process.env.NODE_ENV === 'development') {
+            if (import.meta.env.DEV) {
               console.log('Long Task Analytics (dev):', {
                 name: 'longtask',
                 value: task.duration,
@@ -260,7 +260,7 @@ class PerformanceMonitor {
     // In production, send to your analytics service
     // Example: Google Analytics, DataDog, New Relic, etc.
 
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.log('Analytics (dev):', {
         name: metric.name,
         value: metric.value,
@@ -388,9 +388,9 @@ export const performanceMonitor = PerformanceMonitor.getInstance();
 
 // React hook for performance monitoring
 export function usePerformanceMonitor() {
-  const [report, setReport] = React.useState<PerformanceReport | null>(null);
+  const [report, setReport] = useState<PerformanceReport | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleReport = (newReport: PerformanceReport) => {
       setReport(newReport);
     };

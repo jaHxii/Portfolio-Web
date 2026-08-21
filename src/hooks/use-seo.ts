@@ -21,7 +21,7 @@ const defaultSEO: SEOProps = {
     'addis ababa',
     'ethiopia',
   ],
-  image: '/portfolio.png',
+  image: '/portfolio.webp',
   type: 'website',
   author: 'Ermias Lemesa',
 };
@@ -115,8 +115,9 @@ export const useSEO = (customSEO?: Partial<SEOProps>): SEOProps => {
   const location = useLocation();
 
   return useMemo(() => {
+    const origin = window.location.origin;
     const pageSEO = pageSEOConfig[location.pathname] || {};
-    const currentUrl = `${window.location.origin}${location.pathname}`;
+    const currentUrl = `${origin}${location.pathname}`;
 
     return {
       ...defaultSEO,
@@ -125,7 +126,7 @@ export const useSEO = (customSEO?: Partial<SEOProps>): SEOProps => {
       url: currentUrl,
       canonicalUrl: currentUrl,
     };
-  }, [location.pathname, customSEO]);
+  }, [location.pathname, location.origin, customSEO]);
 };
 
 export default useSEO;

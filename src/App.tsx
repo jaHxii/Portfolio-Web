@@ -2,7 +2,13 @@ import React, { Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import LoadingFallback from './components/layout/LoadingFallback';
 import RouteErrorBoundary from './components/layout/RouteErrorBoundary';
 import { preloadCriticalRoutes } from './lib/route-preloader';
@@ -11,8 +17,6 @@ import { ScrollProgress } from './components/ui/scroll-progress';
 import { CursorGlow } from './components/ui/cursor-glow';
 import { BackToTop } from './components/ui/back-to-top';
 import AltitudeCounter from './components/ui/altitude-counter';
-import ScrollSky from './components/atmosphere/ScrollSky';
-import CloudField from './components/atmosphere/CloudField';
 
 // Lazy load all page components for code splitting
 const Index = React.lazy(() => import('./pages/Index'));
@@ -24,11 +28,17 @@ const Resume = React.lazy(() => import('./pages/Resume'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Performance dashboard — dev only, split into its own chunk
+const ScrollSky = React.lazy(() => import('./components/atmosphere/ScrollSky'));
+const CloudField = React.lazy(
+  () => import('./components/atmosphere/CloudField')
+);
+
+// Performance dashboard — dev only, split into its own chunk
 const PerformanceDashboard = React.lazy(
   () => import('./components/ui/performance-dashboard')
 );
 
-const AnimatedRoutes = () => {
+const AnimatedRoutesInner = () => {
   const location = useLocation();
 
   return (
@@ -70,6 +80,16 @@ const AnimatedRoutes = () => {
   );
 };
 
+const AnimatedRoutes = () => {
+  const navigate = useNavigate();
+
+  return (
+    <RouteErrorBoundary navigate={navigate}>
+      <AnimatedRoutesInner />
+    </RouteErrorBoundary>
+  );
+};
+
 const App = () => {
   useEffect(() => {
     // Preload critical routes on app initialization
@@ -92,12 +112,12 @@ const App = () => {
         <CursorGlow />
         <BackToTop />
         <AltitudeCounter />
-        <ScrollSky />
-        <CloudField />
+        <Suspense fallback={null}>
+          <ScrollSky />
+          <CloudField />
+        </Suspense>
         <div id='main-content' tabIndex={-1}>
-          <RouteErrorBoundary>
-            <AnimatedRoutes />
-          </RouteErrorBoundary>
+          <AnimatedRoutes />
         </div>
 
         {/* Performance Dashboard (development only) */}

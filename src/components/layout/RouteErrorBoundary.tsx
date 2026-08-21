@@ -2,11 +2,12 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, NavigateFunction } from 'react-router-dom';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  navigate?: NavigateFunction;
 }
 
 interface State {
@@ -43,7 +44,11 @@ class RouteErrorBoundary extends Component<Props, State> {
   };
 
   handleGoHome = () => {
-    window.location.href = '/';
+    if (this.props.navigate) {
+      this.props.navigate('/');
+    } else {
+      window.location.href = '/';
+    }
   };
 
   render() {
@@ -84,7 +89,7 @@ class RouteErrorBoundary extends Component<Props, State> {
             </div>
 
             {/* Error Details (Development Only) */}
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {import.meta.env.DEV && this.state.error && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}

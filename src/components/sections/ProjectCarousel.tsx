@@ -4,88 +4,9 @@ import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ConfirmCodeLink from '@/components/ui/confirm-code-link';
 import DemoGallery from '@/components/sections/DemoGallery';
-import { MESOB_DEMO_IMAGES } from '@/lib/mesob-demo-images';
-import {
-  CAREHUB_DEMO_IMAGES,
-  CAREHUB_MAIN_IMAGE,
-} from '@/lib/carehub-demo-images';
-import {
-  PYTHON_SNMP_DEMO_IMAGES,
-  PYTHON_SNMP_MAIN_IMAGE,
-} from '@/lib/python-snmp-demo-images';
+import { ALL_PROJECTS } from '@/lib/projects-data';
 
-interface CarouselProject {
-  title: string;
-  description: string;
-  category: string;
-  tech: string[];
-  github?: string;
-  demo?: string;
-  image?: string;
-  demoImages?: string[];
-}
-
-const FEATURED: CarouselProject[] = [
-  {
-    title: 'Melala Coffee',
-    description:
-      'Responsive website for an authentic Ethiopian coffee shop in Addis Ababa - live on Netlify.',
-    category: 'Frontend',
-    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Netlify'],
-    github: 'https://github.com/jaHxii/melala-buna-brand',
-    demo: 'https://melalacoffee.netlify.app',
-    image: '/melalaCoffee.webp',
-  },
-  {
-    title: 'KIRAY - Rental & Building Management',
-    description:
-      'Full-stack rental platform with tenant management, payment tracking, and reporting.',
-    category: 'Full Stack',
-    tech: ['React', 'Node.js', 'Database', 'Authentication'],
-    github: 'https://github.com/jaHxii/kiray.git',
-    image: '/kiray_page.webp',
-  },
-  {
-    title: 'MESOB IT Helpdesk Ticketing',
-    description:
-      'Automated helpdesk platform for tracking, prioritizing, and resolving support tickets.',
-    category: 'Full Stack',
-    tech: ['Backend Logic', 'Workflow Management', 'Ticketing'],
-    github: 'https://github.com/jaHxii/Mesob-Help_Desk.git',
-    image: '/mesob_page.webp',
-    demoImages: MESOB_DEMO_IMAGES,
-  },
-  {
-    title: 'CareHub - Healthcare Management System',
-    description:
-      'Fullstack clinic platform handling appointments, patient records, and prescriptions with PostgreSQL-enforced conflict-free scheduling and role-based access.',
-    category: 'Full Stack',
-    tech: ['React', 'Express', 'PostgreSQL', 'JWT', 'Docker'],
-    github: 'https://github.com/jaHxii/CareHub.git',
-    image: CAREHUB_MAIN_IMAGE,
-    demoImages: CAREHUB_DEMO_IMAGES,
-  },
-  {
-    title: 'Realtime Support Ops Dashboard',
-    description:
-      'Real-time customer support ops dashboard streaming simulated ticket activity over WebSocket, visualized with a custom D3 chart and a virtualized 10,000-row live log - with offline fallback, filters, and 15 passing tests.',
-    category: 'Frontend',
-    tech: ['React', 'WebSocket', 'Data Visualization'],
-    github: 'https://github.com/jaHxii/realtime-support-ops-dashboard.git',
-    image: '/realtime-support-ops-dashboard_page.webp',
-    demoImages: ['/realtime-support-ops-dashboard_page.webp'],
-  },
-  {
-    title: 'Local Network Printer Information Collector',
-    description:
-      'Windows executable tool that scans printers on a local network, automating device discovery and configuration reporting for IT asset monitoring.',
-    category: 'IT/DevOps',
-    tech: ['Python', 'SNMP', 'Windows', 'Network Scanning'],
-    github: 'https://github.com/jaHxii/Python-SNMP-Printer.git',
-    image: PYTHON_SNMP_MAIN_IMAGE,
-    demoImages: PYTHON_SNMP_DEMO_IMAGES,
-  },
-];
+const FEATURED = ALL_PROJECTS;
 
 const ProjectCarousel = () => {
   const [index, setIndex] = useState(0);
@@ -107,11 +28,28 @@ const ProjectCarousel = () => {
     setIndex(prev => (prev + dir + FEATURED.length) % FEATURED.length);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      go(-1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      go(1);
+    }
+  };
+
   return (
     <div
       className='relative'
+      role='region'
+      aria-label='Featured projects carousel'
+      aria-roledescription='carousel'
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
     >
       <AnimatePresence mode='wait'>
         <motion.div
@@ -148,7 +86,12 @@ const ProjectCarousel = () => {
               {/* Content */}
               <div className='p-8 md:p-10 flex flex-col justify-center text-left'>
                 <div className='flex items-center gap-3 mb-4'>
-                  <span className='font-mono text-xs tracking-[0.3em] gold-text'>
+                  {' '}
+                  <span
+                    className='font-mono text-xs tracking-[0.3em] gold-text'
+                    aria-live='polite'
+                    aria-atomic='true'
+                  >
                     {String(index + 1).padStart(2, '0')} /{' '}
                     {String(FEATURED.length).padStart(2, '0')}
                   </span>

@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 import { Download, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/Footer';
 import SEO from '@/components/seo/SEO';
+import StructuredData from '@/components/seo/StructuredData';
+import { useSEO } from '@/hooks/use-seo';
+import { useStructuredData } from '@/hooks/use-structured-data';
 
 /* ─── Real data from Ermias's CV ─────────────────── */
 
@@ -140,21 +144,26 @@ const REFERENCE = {
 
 const Resume = () => {
   const handlePrint = () => window.print();
+  const seoProps = useSEO({
+    title: 'Resume - Ermias Lemesa Bayisa',
+    description:
+      'Resume of Ermias Lemesa Bayisa - Computer Engineer, IT Support Specialist and Hardware Engineer based in Addis Ababa, Ethiopia.',
+    keywords: [
+      'resume',
+      'CV',
+      'Ermias Lemesa',
+      'Computer Engineer',
+      'IT Support',
+      'Hardware Engineer',
+    ],
+    section: 'Resume',
+  });
+  const { breadcrumbSchema } = useStructuredData();
 
   return (
-    <>
-      <SEO
-        title='Resume - Ermias Lemesa Bayisa'
-        description='Resume of Ermias Lemesa Bayisa - Computer Engineer, IT Support Specialist and Hardware Engineer based in Addis Ababa, Ethiopia.'
-        keywords={[
-          'resume',
-          'CV',
-          'Ermias Lemesa',
-          'Computer Engineer',
-          'IT Support',
-          'Hardware Engineer',
-        ]}
-      />
+    <div className='min-h-screen bg-background'>
+      <SEO {...seoProps} />
+      <StructuredData schema={breadcrumbSchema} />
 
       {/* ── Action bar (screen only) ── */}
       <div className='print:hidden'>
@@ -357,7 +366,10 @@ const Resume = () => {
           .print\\:hidden { display: none !important; }
         }
       `}</style>
-    </>
+      <div className='print:hidden'>
+        <Footer />
+      </div>
+    </div>
   );
 };
 

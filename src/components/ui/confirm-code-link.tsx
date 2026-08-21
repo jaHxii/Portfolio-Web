@@ -24,7 +24,7 @@ const ConfirmCodeLink = ({
   const [open, setOpen] = useState(false);
 
   const depart = () => {
-    window.open(href, '_blank', 'noopener,noreferrer');
+    window.open(href, '_blank', 'noopener=yes,noreferrer=yes');
     setOpen(false);
   };
 
